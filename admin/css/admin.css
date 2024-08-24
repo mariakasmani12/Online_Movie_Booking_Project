@@ -2524,3 +2524,6 @@ body::-webkit-scrollbar-thumb {
   border-radius: 4px !important;
   cursor: pointer;
 }
+.err{
+  color: #f9ab00 ;
+}

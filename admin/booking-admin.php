@@ -1,5 +1,16 @@
 <?php
 include("admin-layouts/header.php");
+
+$sql_join="SELECT * FROM `bookings` AS b
+JOIN `show` AS sh ON b.show_id = sh.id
+JOIN `show_timing`AS st ON sh.show_time_id=st.id
+JOIN `screen` AS sc ON sh.screen_id=sc.id
+JOIN `theater`AS th ON sc.theater_id=th.id
+JOIN `movies` AS m ON sh.movie_id=m.id
+JOIN `seat_class`AS class ON b.seat_class_id=class.id
+JOIN `user`AS u ON b.user_id=u.id";
+
+$bookings=mysqli_query($conn,$sql_join);
 ?>
 	<!-- main content -->
 	<main class="main">
@@ -13,7 +24,7 @@ include("admin-layouts/header.php");
 						<span class="main__title-stat">3,702 Total</span>
 
 						<div class="main__title-wrap">
-                        <button type="button" data-bs-toggle="modal" class="main__title-link main__title-link--wrap" data-bs-target="#modal-user">Add user</button>
+						<a href="add-booking.php" class="main__title-link">add bookings</a>
 
 							<select class="filter__select" name="sort" id="filter__sort">
 								<option value="0">Date created</option>
@@ -40,488 +51,88 @@ include("admin-layouts/header.php");
 						<table class="catalog__table">
 							<thead>
 								<tr>
-									<th>ID</th>
-									<th>BASIC INFO</th>
-									<th>USERNAME</th>
-									<th>PRICING PLAN</th>
-									<th>COMMENTS</th>
-									<th>REVIEWS</th>
-									<th>STATUS</th>
-									<th>CRAETED DATE</th>
+								    <th>#</th>
+									<th>BookingID</th>
+									<th>UserID</th>
+									<th>Name</th>
+									<th>Email</th>
+									<th>Theater</th>
+									<th>Movie</th>
+									<th>Screen</th>
+									<th>Seat_class</th>
+									<th>Date</th>
+									<th>Timing</th>
+									<th>status</th>
 									<th>ACTIONS</th>
 								</tr>
 							</thead>
 
 							<tbody>
+							<?php
+								$srno=1;
+								while($booking = mysqli_fetch_assoc($bookings)) 
+								{
+								?>
 								<tr>
 									<td>
-										<div class="catalog__text">11</div>
+										<div class="catalog__text"><?php echo $srno?></div>
 									</td>
 									<td>
-										<div class="catalog__user">
-											<div class="catalog__avatar">
-												<img src="img/user.svg" alt="">
-											</div>
-											<div class="catalog__meta">
-												<h3>Tess Harper</h3>
-												<span>email@email.com</span>
-											</div>
+										<div class="catalog__text">
+										<?php echo $booking['b_id']?>
 										</div>
 									</td>
 									<td>
-										<div class="catalog__text">Username</div>
+										<div class="catalog__text">
+										<?php echo $booking['user_id']?>
+										</div>
 									</td>
 									<td>
-										<div class="catalog__text">Premium</div>
+										<div class="catalog__text">
+											<?php echo $booking['name']?>
+										</div>
 									</td>
 									<td>
-										<div class="catalog__text">13</div>
+										<div class="catalog__text">
+										<?php echo $booking['email']?>
+										</div>
 									</td>
 									<td>
-										<div class="catalog__text">1</div>
+										<div class="catalog__text"><?php echo $booking['theater_name']?></div>
+									</td>
+									<td>
+										<div class="catalog__text"><?php echo $booking['title']?></div>
+									</td>
+									<td>
+										<div class="catalog__text"><?php echo $booking['screen_name']?></div>
+									</td>
+									<td>
+										<div class="catalog__text"><?php echo $booking['class_type']?></div>
+									</td>
+									<td>
+										<div class="catalog__text"><?php echo $booking['show_date']?></div>
+									</td>
+									<td>
+										<div class="catalog__text"><?php echo $booking['time']?> <br> <?php echo$booking['time_name'];?></div>
 									</td>
 									<td>
 										<div class="catalog__text catalog__text--green">Approved</div>
 									</td>
 									<td>
-										<div class="catalog__text">05.02.2023</div>
-									</td>
-									<td>
 										<div class="catalog__btns">
 											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--banned" data-bs-target="#modal-status">
 												<i class="ti ti-lock"></i>
 											</button>
-											<a href="edit-user.html" class="catalog__btn catalog__btn--edit">
+											<a href="edit-user.php" class="catalog__btn catalog__btn--edit">
 												<i class="ti ti-edit"></i>
 											</a>
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
+
+											<a href="delete-booking.php?bookid=<?php echo $booking['b_id']?>" type="button"class="catalog__btn catalog__btn--delete" >
 												<i class="ti ti-trash"></i>
-											</button>
+								            </a>
 										</div>
 									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="catalog__text">12</div>
-									</td>
-									<td>
-										<div class="catalog__user">
-											<div class="catalog__avatar">
-												<img src="img/user.svg" alt="">
-											</div>
-											<div class="catalog__meta">
-												<h3>Gene Graham</h3>
-												<span>email@email.com</span>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div class="catalog__text">Username</div>
-									</td>
-									<td>
-										<div class="catalog__text">Free</div>
-									</td>
-									<td>
-										<div class="catalog__text">1</div>
-									</td>
-									<td>
-										<div class="catalog__text">15</div>
-									</td>
-									<td>
-										<div class="catalog__text catalog__text--green">Approved</div>
-									</td>
-									<td>
-										<div class="catalog__text">05.02.2023</div>
-									</td>
-									<td>
-										<div class="catalog__btns">
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--banned" data-bs-target="#modal-status">
-												<i class="ti ti-lock"></i>
-											</button>
-											<a href="edit-user.html" class="catalog__btn catalog__btn--edit">
-												<i class="ti ti-edit"></i>
-											</a>
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-												<i class="ti ti-trash"></i>
-											</button>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="catalog__text">13</div>
-									</td>
-									<td>
-										<div class="catalog__user">
-											<div class="catalog__avatar">
-												<img src="img/user.svg" alt="">
-											</div>
-											<div class="catalog__meta">
-												<h3>Rosa Lee</h3>
-												<span>email@email.com</span>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div class="catalog__text">Username</div>
-									</td>
-									<td>
-										<div class="catalog__text">Premium</div>
-									</td>
-									<td>
-										<div class="catalog__text">6</div>
-									</td>
-									<td>
-										<div class="catalog__text">6</div>
-									</td>
-									<td>
-										<div class="catalog__text catalog__text--green">Approved</div>
-									</td>
-									<td>
-										<div class="catalog__text">04.02.2023</div>
-									</td>
-									<td>
-										<div class="catalog__btns">
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--banned" data-bs-target="#modal-status">
-												<i class="ti ti-lock"></i>
-											</button>
-											<a href="edit-user.html" class="catalog__btn catalog__btn--edit">
-												<i class="ti ti-edit"></i>
-											</a>
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-												<i class="ti ti-trash"></i>
-											</button>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="catalog__text">14</div>
-									</td>
-									<td>
-										<div class="catalog__user">
-											<div class="catalog__avatar">
-												<img src="img/user.svg" alt="">
-											</div>
-											<div class="catalog__meta">
-												<h3>Matt Jones</h3>
-												<span>email@email.com</span>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div class="catalog__text">Username</div>
-									</td>
-									<td>
-										<div class="catalog__text">Free</div>
-									</td>
-									<td>
-										<div class="catalog__text">11</div>
-									</td>
-									<td>
-										<div class="catalog__text">15</div>
-									</td>
-									<td>
-										<div class="catalog__text catalog__text--red">Banned</div>
-									</td>
-									<td>
-										<div class="catalog__text">04.02.2023</div>
-									</td>
-									<td>
-										<div class="catalog__btns">
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--banned" data-bs-target="#modal-status">
-												<i class="ti ti-lock"></i>
-											</button>
-											<a href="edit-user.html" class="catalog__btn catalog__btn--edit">
-												<i class="ti ti-edit"></i>
-											</a>
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-												<i class="ti ti-trash"></i>
-											</button>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="catalog__text">15</div>
-									</td>
-									<td>
-										<div class="catalog__user">
-											<div class="catalog__avatar">
-												<img src="img/user.svg" alt="">
-											</div>
-											<div class="catalog__meta">
-												<h3>Brian Cranston</h3>
-												<span>email@email.com</span>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div class="catalog__text">Username</div>
-									</td>
-									<td>
-										<div class="catalog__text">Basic</div>
-									</td>
-									<td>
-										<div class="catalog__text">0</div>
-									</td>
-									<td>
-										<div class="catalog__text">0</div>
-									</td>
-									<td>
-										<div class="catalog__text catalog__text--green">Approved</div>
-									</td>
-									<td>
-										<div class="catalog__text">04.02.2023</div>
-									</td>
-									<td>
-										<div class="catalog__btns">
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--banned" data-bs-target="#modal-status">
-												<i class="ti ti-lock"></i>
-											</button>
-											<a href="edit-user.html" class="catalog__btn catalog__btn--edit">
-												<i class="ti ti-edit"></i>
-											</a>
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-												<i class="ti ti-trash"></i>
-											</button>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="catalog__text">16</div>
-									</td>
-									<td>
-										<div class="catalog__user">
-											<div class="catalog__avatar">
-												<img src="img/user.svg" alt="">
-											</div>
-											<div class="catalog__meta">
-												<h3>Louis Leterrier</h3>
-												<span>email@email.com</span>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div class="catalog__text">Username</div>
-									</td>
-									<td>
-										<div class="catalog__text">Free</div>
-									</td>
-									<td>
-										<div class="catalog__text">2</div>
-									</td>
-									<td>
-										<div class="catalog__text">1</div>
-									</td>
-									<td>
-										<div class="catalog__text catalog__text--green">Approved</div>
-									</td>
-									<td>
-										<div class="catalog__text">03.02.2023</div>
-									</td>
-									<td>
-										<div class="catalog__btns">
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--banned" data-bs-target="#modal-status">
-												<i class="ti ti-lock"></i>
-											</button>
-											<a href="edit-user.html" class="catalog__btn catalog__btn--edit">
-												<i class="ti ti-edit"></i>
-											</a>
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-												<i class="ti ti-trash"></i>
-											</button>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="catalog__text">17</div>
-									</td>
-									<td>
-										<div class="catalog__user">
-											<div class="catalog__avatar">
-												<img src="img/user.svg" alt="">
-											</div>
-											<div class="catalog__meta">
-												<h3>Son Gun</h3>
-												<span>email@email.com</span>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div class="catalog__text">Username</div>
-									</td>
-									<td>
-										<div class="catalog__text">Cinematic</div>
-									</td>
-									<td>
-										<div class="catalog__text">65</div>
-									</td>
-									<td>
-										<div class="catalog__text">0</div>
-									</td>
-									<td>
-										<div class="catalog__text catalog__text--green">Approved</div>
-									</td>
-									<td>
-										<div class="catalog__text">02.02.2023</div>
-									</td>
-									<td>
-										<div class="catalog__btns">
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--banned" data-bs-target="#modal-status">
-												<i class="ti ti-lock"></i>
-											</button>
-											<a href="edit-user.html" class="catalog__btn catalog__btn--edit">
-												<i class="ti ti-edit"></i>
-											</a>
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-												<i class="ti ti-trash"></i>
-											</button>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="catalog__text">18</div>
-									</td>
-									<td>
-										<div class="catalog__user">
-											<div class="catalog__avatar">
-												<img src="img/user.svg" alt="">
-											</div>
-											<div class="catalog__meta">
-												<h3>Jordana Brewster</h3>
-												<span>email@email.com</span>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div class="catalog__text">Username</div>
-									</td>
-									<td>
-										<div class="catalog__text">Premium</div>
-									</td>
-									<td>
-										<div class="catalog__text">0</div>
-									</td>
-									<td>
-										<div class="catalog__text">0</div>
-									</td>
-									<td>
-										<div class="catalog__text catalog__text--red">Banned</div>
-									</td>
-									<td>
-										<div class="catalog__text">02.02.2023</div>
-									</td>
-									<td>
-										<div class="catalog__btns">
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--banned" data-bs-target="#modal-status">
-												<i class="ti ti-lock"></i>
-											</button>
-											<a href="edit-user.html" class="catalog__btn catalog__btn--edit">
-												<i class="ti ti-edit"></i>
-											</a>
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-												<i class="ti ti-trash"></i>
-											</button>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="catalog__text">19</div>
-									</td>
-									<td>
-										<div class="catalog__user">
-											<div class="catalog__avatar">
-												<img src="img/user.svg" alt="">
-											</div>
-											<div class="catalog__meta">
-												<h3>Tyreese Gibson</h3>
-												<span>email@email.com</span>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div class="catalog__text">Username</div>
-									</td>
-									<td>
-										<div class="catalog__text">Premium</div>
-									</td>
-									<td>
-										<div class="catalog__text">13</div>
-									</td>
-									<td>
-										<div class="catalog__text">1</div>
-									</td>
-									<td>
-										<div class="catalog__text catalog__text--green">Approved</div>
-									</td>
-									<td>
-										<div class="catalog__text">01.02.2023</div>
-									</td>
-									<td>
-										<div class="catalog__btns">
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--banned" data-bs-target="#modal-status">
-												<i class="ti ti-lock"></i>
-											</button>
-											<a href="edit-user.html" class="catalog__btn catalog__btn--edit">
-												<i class="ti ti-edit"></i>
-											</a>
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-												<i class="ti ti-trash"></i>
-											</button>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="catalog__text">20</div>
-									</td>
-									<td>
-										<div class="catalog__user">
-											<div class="catalog__avatar">
-												<img src="img/user.svg" alt="">
-											</div>
-											<div class="catalog__meta">
-												<h3>Charlize Theron</h3>
-												<span>email@email.com</span>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div class="catalog__text">Username</div>
-									</td>
-									<td>
-										<div class="catalog__text">Free</div>
-									</td>
-									<td>
-										<div class="catalog__text">1</div>
-									</td>
-									<td>
-										<div class="catalog__text">15</div>
-									</td>
-									<td>
-										<div class="catalog__text catalog__text--red">Banned</div>
-									</td>
-									<td>
-										<div class="catalog__text">01.02.2023</div>
-									</td>
-									<td>
-										<div class="catalog__btns">
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--banned" data-bs-target="#modal-status">
-												<i class="ti ti-lock"></i>
-											</button>
-											<a href="edit-user.html" class="catalog__btn catalog__btn--edit">
-												<i class="ti ti-edit"></i>
-											</a>
-											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-												<i class="ti ti-trash"></i>
-											</button>
-										</div>
-									</td>
+								<?php }?>
 								</tr>
 							</tbody>
 						</table>
@@ -529,107 +140,14 @@ include("admin-layouts/header.php");
 				</div>
 				<!-- end users -->
 
-				<!-- paginator -->
-				<div class="col-12">
-					<div class="main__paginator">
-						<!-- amount -->
-						<span class="main__paginator-pages">10 of 169</span>
-						<!-- end amount -->
 
-						<ul class="main__paginator-list">
-							<li>
-								<a href="#">
-									<i class="ti ti-chevron-left"></i>
-									<span>Prev</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<span>Next</span>
-									<i class="ti ti-chevron-right"></i>
-								</a>
-							</li>
-						</ul>
 
-						<ul class="paginator">
-							<li class="paginator__item paginator__item--prev">
-								<a href="#"><i class="ti ti-chevron-left"></i></a>
-							</li>
-							<li class="paginator__item"><a href="#">1</a></li>
-							<li class="paginator__item paginator__item--active"><a href="#">2</a></li>
-							<li class="paginator__item"><a href="#">3</a></li>
-							<li class="paginator__item"><a href="#">4</a></li>
-							<li class="paginator__item"><span>...</span></li>
-							<li class="paginator__item"><a href="#">29</a></li>
-							<li class="paginator__item"><a href="#">30</a></li>
-							<li class="paginator__item paginator__item--next">
-								<a href="#"><i class="ti ti-chevron-right"></i></a>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<!-- end paginator -->
 			</div>
 		</div>
 	</main>
 	<!-- end main content -->
 
-	<!-- user modal -->
-	<div class="modal fade" id="modal-user" tabindex="-1" aria-labelledby="modal-user" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal__content">
-					<form action="#" class="modal__form">
-						<h4 class="modal__title">Add User</h4>
-
-						<div class="row">
-							<div class="col-12">
-								<div class="sign__group">
-									<label class="sign__label" for="email0">Email</label>
-									<input id="email0" type="text" name="email0" class="sign__input">
-								</div>
-							</div>
-
-							<div class="col-12">
-								<div class="sign__group">
-									<label class="sign__label" for="pass0">Password</label>
-									<input id="pass0" type="password" name="pass0" class="sign__input">
-								</div>
-							</div>
-
-							<div class="col-12">
-								<div class="sign__group">
-									<label class="sign__label" for="subscription">Subscription</label>
-									<select class="sign__select" id="subscription">
-										<option value="Basic">Basic</option>
-										<option value="Premium">Premium</option>
-										<option value="Cinematic">Cinematic</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="col-12">
-								<div class="sign__group">
-									<label class="sign__label" for="rights">Rights</label>
-									<select class="sign__select" id="rights">
-										<option value="User">User</option>
-										<option value="Moderator">Moderator</option>
-										<option value="Admin">Admin</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="col-12 col-lg-6 offset-lg-3">
-								<button type="button" class="sign__btn sign__btn--modal">Add</button>
-							</div>	
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end user modal -->
-
+	
 	<!-- status modal -->
 	<div class="modal fade" id="modal-status" tabindex="-1" aria-labelledby="modal-status" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
@@ -651,26 +169,7 @@ include("admin-layouts/header.php");
 	</div>
 	<!-- end status modal -->
 
-	<!-- delete modal -->
-	<div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="modal-delete" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal__content">
-					<form action="#" class="modal__form">
-						<h4 class="modal__title">User delete</h4>
-
-						<p class="modal__text">Are you sure to permanently delete this user?</p>
-
-						<div class="modal__btns">
-							<button class="modal__btn modal__btn--apply" type="button"><span>Delete</span></button>
-							<button class="modal__btn modal__btn--dismiss" type="button" data-bs-dismiss="modal" aria-label="Close"><span>Dismiss</span></button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end delete modal -->
+	
 
 	<!-- JS -->
 	<script src="js/bootstrap.bundle.min.js"></script>

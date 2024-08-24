@@ -4,14 +4,39 @@ include("admin-layouts/header.php");
 // $sql_theater="SELECT * FROM `theater`";
 // $theaters=mysqli_query($conn,$sql_theater);
 
-$image=$title=$cast=$director=$duration=$relased_date=$trailer_url=$synopsis="";
+$image=$title=$cast=$director=$duration=$relased_date=$trailer_url=$synopsis=$movieid="";
 $titleErr=$castErr=$directorErr=$durationErr=$relased_dateErr="";
 $uploadErr = [];
 $uploads_dir = '../images';
 // $string = implode("", $uploadErr);
 
+
+if ($_SERVER['REQUEST_METHOD'] == "GET") {
+	$movieid= test_input($_GET['movie_id']);
+
+
+$sql_movie="SELECT * FROM `movies` WHERE movie_id = $movieid";
+$movies = mysqli_query($conn,$sql_movie);
+
+$movie = mysqli_fetch_assoc($movies);
+
+$title = $movie['title'];
+$cast = $movie['cast'];
+$director = $movie['director'];
+$duration = $movie['duration'];
+$relased_date = $movie['released_date'];
+$trailer_url = $movie['trailer_url'];
+$synopsis = $movie['synopsis'];
+$to= $movie['image'];
+
+}
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 	// prx($_POST);
+    $movieid = test_input($_POST["movie_id"]);
+    $to = $uploads_dir . '/' . basename($_FILES['image']['name']);
+        $from = $_FILES['image']['tmp_name'];
+        $size = $_FILES['image']['size'];
     if (empty($_POST["title"])) {
         $titleErr = "title is required";
     } else {
@@ -49,9 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $synopsis = test_input($_POST["synopsis"]);
     }
 	 // Check if file already exists
-$to = $uploads_dir . '/' . basename($_FILES['image']['name']);
-        $from = $_FILES['image']['tmp_name'];
-        $size = $_FILES['image']['size'];
+
 
         // Your other checks and operations here
 
@@ -63,11 +86,24 @@ $to = $uploads_dir . '/' . basename($_FILES['image']['name']);
             array_push($uploadErr, "file size must be under 2MB !");
         }
 	if (empty($titleErr) && empty($castErr)&& empty($directorErr)&& empty($durationErr)&& empty($relased_dateErr)) {
-		if(move_uploaded_file($from,$to)) {
-			echo("file uploaded successfully");
-	$sql_movie_insert="INSERT INTO `movies` ( `title`, `cast`, `director`, `duration`, `released_date`, `trailer_url`, `synopsis`, `image`) 
-	VALUES ( '$title', '$cast', '$director', '$duration', '$relased_date', '$trailer_url', '$synopsis ', '$to')";
-	if (mysqli_query($conn, $sql_movie_insert)) {
+		$isUploaded = true;
+        if(!empty($_FILES)) {
+            if(move_uploaded_file($from, $to)) {
+                echo ("file uploaded successfully");
+            }else{
+                $isUploaded = false;
+            }
+        }
+	if($isUploaded){$sql_movie_update="UPDATE `movies` SET 
+    `title` = '$title',
+    `cast` = '$cast', 
+    `director` = '$director',
+    `duration` = '$duration',
+    `released_date` = '$relased_date', 
+    `trailer_url` = '$trailer_url',
+    `synopsis` = '$synopsis', 
+    `image` = '$to' WHERE `movies`.`movie_id` = $movieid";
+	if (mysqli_query($conn, $sql_movie_update)) {
 		header("Location: movie-admin.php");
 		exit();
 	}
@@ -82,7 +118,7 @@ $to = $uploads_dir . '/' . basename($_FILES['image']['name']);
 				<!-- main title -->
 				<div class="col-12">
 					<div class="main__title">
-						<h2>Add movie</h2>
+						<h2>Edit movie</h2>
 					</div>
 				</div>
 				<!-- end main title -->
@@ -94,9 +130,28 @@ $to = $uploads_dir . '/' . basename($_FILES['image']['name']);
 				<div class="col-12">
 					<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" class="sign__form sign__form--add" enctype="multipart/form-data">
 						<!-- @csrf -->
+                        <div class="col-12">
+                       <div class="sign__group">
+                   <label for="current_image" class="form-label text-light"></label>
+                   <div>
+                   <img src="<?php echo $to; ?>" alt="Current Movie Image" style="max-width: 200px; height: auto;">
+                 </div>
+                </div>
+                 </div>
 					<div class="row">
 							<div class="col-12 col-xl-7">
 								<div class="row">
+                                <div class="col-12">   
+                                <div class="invisible">
+                            <input type="text" name="to" value="<?php echo $to?>">
+                        </div>
+                        </div>
+                                <div class="col-12">
+										<div class="sign__group">
+										<label for="movie_id" hidden  class="form-label text-light">moviw id</label>
+											<input type="hidden" class="sign__input"  name="movie_id" value="<?php echo $movieid ?>">
+										</div>
+									</div>
 								<div class="col-12">
 										<div class="sign__group">
 										<label for="image" class="form-label text-light">choose image <span class="text-danger"></span></label>
@@ -106,44 +161,44 @@ $to = $uploads_dir . '/' . basename($_FILES['image']['name']);
 									<div class="col-12">
 										<div class="sign__group">
 										<label for="title" class="form-label text-light">title<span class="text-danger">*<?php  echo   $titleErr?></span></label>
-											<input type="text" class="sign__input"  name="title">
+											<input type="text" class="sign__input"  name="title" value="<?php echo $title?>">
 										</div>
 									</div>
 									<div class="col-12">
 										<div class="sign__group">
-										<label for="cast" class="form-label text-light">cast<span class="text-danger">*<?php  echo  $castErr?></span></label>
-											<textarea id="text"  class="sign__textarea"  name="cast"></textarea>
+										<label for="cast" class="form-label text-light">cast</label>
+											<textarea id="text"  class="sign__textarea"  name="cast" ><?php echo htmlspecialchars($cast); ?></textarea>
 										</div>
 									</div>
 									<div class="col-12">
 										<div class="sign__group">
 										<label for="director" class="form-label text-light">director <span class="text-danger">*<?php  echo   $directorErr?></span></label>
-											<input type="text" class="sign__input"  name="director">
+											<input type="text" class="sign__input"  name="director" value="<?php echo $director?>">
 										</div>
 									</div>
 									<div class="col-12">
 										<div class="sign__group">
 										<label for="duration" class="form-label text-light">duration<span class="text-danger">*<?php  echo   $durationErr?></span></label>
-											<input type="text"  class="sign__input"  name="duration"placeholder="hh:mm">
+											<input type="text"  class="sign__input"  name="duration"placeholder="hh:mm" value="<?php echo $duration?>">
 										</div>
 									</div>
 									<div class="col-12">
 										<div class="sign__group">
 										<label for="released_date" class="form-label text-light">released_date <span class="text-danger">*<?php  echo   $relased_dateErr?></span></label>
-											<input type="date" class="sign__input"  name="released_date">
+											<input type="date" class="sign__input"  name="released_date" value="<?php echo $relased_date?>">
 										</div>
 									</div>
 									<div class="col-12">
 										<div class="sign__group">
 										<label for="trailer_url" class="form-label text-light">trailer_url </label>
-											<input type="text" class="sign__input"  name="trailer_url">
+											<input type="text" class="sign__input"  name="trailer_url" value="<?php echo $trailer_url?>">
 										</div>
 									</div>
 
 									<div class="col-12">
 										<div class="sign__group">
 										<label for="synopsis" class="form-label text-light">synopsis</label>
-											<textarea id="text"  class="sign__textarea"  name="synopsis"></textarea>
+											<textarea id="text"  class="sign__textarea"  name="synopsis" ><?php echo htmlspecialchars($synopsis); ?></textarea>
 										</div>
 									</div>
 							</div>

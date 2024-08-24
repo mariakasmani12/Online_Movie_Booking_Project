@@ -110,7 +110,7 @@
 		new SlimSelect({
 			select: '#sign__country',
 			settings: {
-				placeholderText: 'Choose country',
+				
 			}
 		});
 	}
@@ -119,10 +119,20 @@
 		new SlimSelect({
 			select: '#sign__director',
 			settings: {
-				placeholderText: 'Choose director',
+				
 			}
 		});
 	}
+
+	if (document.querySelector('#sign__role')) {
+		new SlimSelect({
+			select: '#sign__role',
+			settings: {
+				
+			}
+		});
+	}
+
 
 	if (document.querySelector('#sign__actors')) {
 		new SlimSelect({
@@ -170,15 +180,15 @@
 	/*==============================
 	Section bg
 	==============================*/
-	if (document.querySelector('.section--bg')) {
-		var mainBg = document.querySelector('.section--bg');
+	// if (document.querySelector('.section--bg')) {
+	// 	var mainBg = document.querySelector('.section--bg');
 
-		if (mainBg.getAttribute('data-bg')) {
-			mainBg.style.background = `url(${mainBg.getAttribute('data-bg')})`;
-			mainBg.style.backgroundPosition = 'center center';
-			mainBg.style.backgroundRepeat = 'no-repeat';
-			mainBg.style.backgroundSize = 'cover';
-		}
-	}
+	// 	if (mainBg.getAttribute('data-bg')) {
+	// 		mainBg.style.background = `url(${mainBg.getAttribute('data-bg')})`;
+	// 		mainBg.style.backgroundPosition = 'center center';
+	// 		mainBg.style.backgroundRepeat = 'no-repeat';
+	// 		mainBg.style.backgroundSize = 'cover';
+	// 	}
+	// }
 
 })(window, document);
