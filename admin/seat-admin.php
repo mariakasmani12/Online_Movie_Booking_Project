@@ -19,7 +19,7 @@ $classes=mysqli_query($conn,$sql);
 						<span class="main__title-stat">3,702 Total</span>
 						
 						<div class="main__title-wrap">
-						<a href="add-theater.php" class="main__title-link">add theater</a>
+						<a href="add-seat.php" class="main__title-link">add seat</a>
 						
 							<select class="filter__select" name="sort" id="filter__sort">
 								<option value="0">Date created</option>
@@ -51,6 +51,7 @@ $classes=mysqli_query($conn,$sql);
 									<th>Screen</th>
 									<th>Seat Class</th>
 									<th>price</th>
+									<th>action</th>
 								</tr>
 							</thead>
 
@@ -89,10 +90,10 @@ $classes=mysqli_query($conn,$sql);
 											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--banned" data-bs-target="#modal-status">
 												<i class="ti ti-lock"></i>
 											</button>
-											<a href="edit-theater.php?t_id=<?php echo $theater['theater_id']?>" class="catalog__btn catalog__btn--edit">
+											<a href="edit-seat.php?st_id=<?php echo $class['seat_id']?>" class="catalog__btn catalog__btn--edit">
 												<i class="ti ti-edit"></i>
 											</a>
-											<a href="delete-theater.php?t_id=<?php echo $theater['theater_id']?>" class="catalog__btn catalog__btn--delete">
+											<a href="delete-seat.php?st_id=<?php echo $class['seat_id']?>" class="catalog__btn catalog__btn--delete">
 												<i class="ti ti-trash"></i>
 								            </a>
 										</div>

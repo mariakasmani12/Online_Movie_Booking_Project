@@ -8,8 +8,14 @@ $screens = mysqli_query($conn, $sql_screen);
 $sql_theater = "SELECT * FROM `theater`";
 $theaters = mysqli_query($conn, $sql_theater);
 
-$theater = $screen = $seat_class = $price = "";
-$theaterErr = $screenErr = $seat_classErr = $priceErr = "";
+$sql_movie = "SELECT * FROM `movies`";
+$moviess = mysqli_query($conn, $sql_movie);
+
+$sql_show_time = "SELECT * FROM `show_timing`";
+$show_times = mysqli_query($conn, $sql_show_time);
+
+$theater = $screen = $movies = $show_time = $show_date ="";
+$theaterErr = $screenErr = $moviesErr = $show_timeErr = $show_dateErr ="";
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (empty($_POST["theater_name"])) {
@@ -24,23 +30,28 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $screen = test_input($_POST["screen_name"]);
     }
 
-    if (empty($_POST["class_type"])) {
-        $seat_classErr = "Seat class is required";
+    if (empty($_POST["movie_id"])) {
+        $moviesErr = "movie is required";
     } else {
-        $seat_class = test_input($_POST["class_type"]);
+        $movies = test_input($_POST["movie_id"]);
     }
 
-    if (empty($_POST["price"])) {
-        $priceErr = "Price is required";
+    if (empty($_POST["show_time_id"])) {
+        $show_timeErr = "time is required";
     } else {
-        $price = test_input($_POST["price"]);
+        $show_time = test_input($_POST["show_time_id"]);
     }
 
-    if (empty($theaterErr) && empty($screenErr) && empty($seat_classErr) && empty($priceErr)) {
-        $sql_theater_insert = "INSERT INTO `seat_class` (`seat_id`, `screen_id`, `class_type`, `price`) 
-                               VALUES (NULL, '$screen', '$seat_class', '$price')";
-        if (mysqli_query($conn, $sql_theater_insert)) {
-            header("Location: seat-admin.php");
+    if (empty($_POST["show_date"])) {
+        $show_timeErr = "date is required";
+    } else {
+        $show_date = test_input($_POST["show_date"]);
+    }
+
+    if (empty($theaterErr) && empty($screenErr) && empty($moviesErr) && empty($show_timeErr) && empty($show_dateErr)) {
+        $sql_show_insert = "INSERT INTO `show` (`show_id`, `screen_id`, `movie_id`, `show_time_id`, `show_date`) VALUES (NULL, '$screen', '$movies', '$show_time', '$show_date');";
+        if (mysqli_query($conn, $sql_show_insert)) {
+            header("Location: show-admin.php");
             exit();
         } else {
             echo "Error: " . mysqli_error($conn);
@@ -90,20 +101,39 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                         </select>
                                     </div>
                                 </div>
+                                
+                                <div class="col-12">
+								<div class="sign__group">
+                                <label for="title" class="form-label text-light">movies <span class="text-danger">*<?php    echo $moviesErr; ?></span></label>
+									<select class="sign__selectjs" id="sign__actors"  name="movie_id">
+										<option value=""> select Movies</option>
+                                       <?php  while($mt= mysqli_fetch_assoc($moviess)){?>
+                                          <option value="<?php echo $mt["movie_id"] ?>">  <?php echo  $mt["title"] ?></option>;
+                                            
+                                        <?php } ?> 
+									</select>
+								</div>
+							</div>
 
+                            
+									<div class="col-12">
+										<div class="sign__group">
+                                        <label for="show_time_id" class="form-label text-light">show time <span class="text-danger">*<?php    echo $moviesErr; ?></span></label>
+											<select class="sign__selectjs" id="sign__country" name="show_time_id"> 
+												<option value="">seelct show</option>
+                                                <?php  while($st= mysqli_fetch_assoc($show_times)){?>
+												<option value="<?php echo $st['show_time_id']  ?>"> <?php echo $st["time"] ?>-<?php echo $st["time_name"] ?></option>
+                                            <?php } ?>
+                                         </select>
+								    </div>
+							     </div>        
                                 <div class="col-12">
                                     <div class="sign__group">
-                                        <label for="class_type" class="form-label text-light">class_type <span class="text-danger">*<?php echo $seat_classErr; ?></span></label>
-                                        <input type="text" class="sign__input" name="class_type">
+                                        <label for="class_type" class="form-label text-light">show Date <span class="text-danger">*<?php echo $show_dateErr; ?></span></label>
+                                        <input type="date" class="sign__input" name="show_date">
                                     </div>
                                 </div>
 
-                                <div class="col-12">
-                                    <div class="sign__group">
-                                        <label for="price" class="form-label text-light">price <span class="text-danger">*<?php echo $priceErr; ?></span></label>
-                                        <input type="text" class="sign__input" name="price">
-                                    </div>
-                                </div>
                             </div>
                         </div>
 

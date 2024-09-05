@@ -1,16 +1,14 @@
 <?php
 include("admin-layouts/header.php");
 
-$sql_join="SELECT * FROM `bookings` AS b
-JOIN `shows` AS sh ON b.show_id = sh.show_id
-JOIN `show_timing`AS st ON sh.show_time_id=st.show_time_id
-JOIN `screen` AS sc ON sh.screen_id=sc.screen_id
-JOIN `theater`AS th ON sc.theater_id=th.theater_id
-JOIN `movies` AS m ON sh.movie_id=m.movie_id
-JOIN `seat_class`AS class ON b.seat_class_id=class.seat_id
-JOIN `user`AS u ON b.user_id=u.user_id";
+$sql="SELECT * FROM `shows` AS sh
+JOIN screen AS sc ON sh.screen_id=sc.screen_id
+JOIN theater AS th ON sc.theater_id =th.theater_id
+JOIN movies AS m ON sh.movie_id=m.movie_id
+JOIN show_timing AS st ON sh.show_time_id=st.show_time_id
+";
 
-$bookings=mysqli_query($conn,$sql_join);
+$shows=mysqli_query($conn,$sql);
 ?>
 	<!-- main content -->
 	<main class="main">
@@ -19,13 +17,13 @@ $bookings=mysqli_query($conn,$sql_join);
 				<!-- main title -->
 				<div class="col-12">
 					<div class="main__title">
-						<h2>Bookings</h2>
+						<h2>show</h2>
 
 						<span class="main__title-stat">3,702 Total</span>
-
+						
 						<div class="main__title-wrap">
-						<a href="add-book.php" class="main__title-link">add bookings</a>
-
+						<a href="add-show.php" class="main__title-link">add show</a>
+						
 							<select class="filter__select" name="sort" id="filter__sort">
 								<option value="0">Date created</option>
 								<option value="1">Pricing plan</option>
@@ -39,8 +37,8 @@ $bookings=mysqli_query($conn,$sql_join);
 									<i class="ti ti-search"></i>
 								</button>
 							</form>
-							<!-- end search -->
-						</div>
+							</div>	<!-- end search -->
+						
 					</div>
 				</div>
 				<!-- end main title -->
@@ -52,23 +50,18 @@ $bookings=mysqli_query($conn,$sql_join);
 							<thead>
 								<tr>
 								    <th>#</th>
-									<th>BookingID</th>
-									<th>Name</th>
-									<th>Theater</th>
-									<th>Movie</th>
-									<th>Screen</th>
-									<th>Seat_class</th>
+									<th>theater</th>
+									<th>screen</th>
+									<th>movie</th>
 									<th>Date</th>
-									<th>Timing</th>
-									<th>status</th>
-									<th>ACTIONS</th>
+									<th>time</th>
 								</tr>
 							</thead>
 
 							<tbody>
 							<?php
 								$srno=1;
-								while($booking = mysqli_fetch_assoc($bookings)) 
+								while($show= mysqli_fetch_assoc($shows)) 
 								{
 								?>
 								<tr>
@@ -77,59 +70,54 @@ $bookings=mysqli_query($conn,$sql_join);
 									</td>
 									<td>
 										<div class="catalog__text">
-										<?php echo $booking['b_id']?>
+										<?php echo $show['theater_name']?>
 										</div>
 									</td>
 									<td>
 										<div class="catalog__text">
-											<?php echo $booking['name']?>
+										<?php echo $show['screen_name']?>
 										</div>
 									</td>
 									<td>
-										<div class="catalog__text"><?php echo $booking['theater_name']?></div>
+                                    <div class="catalog__text">
+										<?php echo $show['title']?>
+										</div>
 									</td>
 									<td>
-										<div class="catalog__text"><?php echo $booking['title']?></div>
+										<div class="catalog__text">
+										<?php echo $show['show_date']?>
+										</div>
 									</td>
 									<td>
-										<div class="catalog__text"><?php echo $booking['screen_name']?></div>
-									</td>
-									<td>
-										<div class="catalog__text"><?php echo $booking['class_type']?></div>
-									</td>
-									<td>
-										<div class="catalog__text"><?php echo $booking['show_date']?></div>
-									</td>
-									<td>
-										<div class="catalog__text"><?php echo $booking['time']?> <br> <?php echo$booking['time_name'];?></div>
-									</td>
-									<td>
-										<div class="catalog__text catalog__text--green">Approved</div>
+										<div class="catalog__text">
+										<?php echo $show['time']?><?php echo $show['time_name']?>
+										</div>
 									</td>
 									<td>
 										<div class="catalog__btns">
 											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--banned" data-bs-target="#modal-status">
 												<i class="ti ti-lock"></i>
 											</button>
-											<a href="edit-booking.php?bookid=<?php echo $booking['b_id']?>" class="catalog__btn catalog__btn--edit">
+											<a href="edit-show.php?sh_id=<?php echo  $show['show_id']?>" class="catalog__btn catalog__btn--edit">
 												<i class="ti ti-edit"></i>
 											</a>
-
-											<a href="delete-booking.php?bookid=<?php echo $booking['b_id']?>" type="button"class="catalog__btn catalog__btn--delete" >
+											<a href="delete-show.php?sh_id=<?php echo $show['show_id']?>" class="catalog__btn catalog__btn--delete">
 												<i class="ti ti-trash"></i>
 								            </a>
 										</div>
 									</td>
-								<?php }?>
 								</tr>
+								<?php
+                        $srno++;}
+		?>
+
 							</tbody>
 						</table>
 					</div>
 				</div>
 				<!-- end users -->
-
-
-
+<!-- delete modal -->
+	
 			</div>
 		</div>
 	</main>

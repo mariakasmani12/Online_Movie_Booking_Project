@@ -1,7 +1,7 @@
 <?php
 include("admin-layouts/header.php");
 
- $theater_name=$theater_location="";
+ $theater_name=$theater_location=$theaterid="";
  $theaterErr= $theaterlocationErr="";
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {

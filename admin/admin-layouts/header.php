@@ -2,28 +2,27 @@
 ob_start();
 require("./../connection/connection.php");
 include("./../labraries/function.php");
+session_start();
+
+// Check if the user is logged in and has the admin role
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from hotflix.volkovdesign.com/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 20 Aug 2024 08:51:28 GMT -->
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 	<!-- CSS -->
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/slimselect.css">
 	<link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
 	<!-- Icon font -->
 	<link rel="stylesheet" href="webfont/tabler-icons.min.css">
-
 	<!-- Favicons -->
 	<link rel="icon" type="image/png" href="icon/favicon-32x32.png" sizes="32x32">
 	<link rel="apple-touch-icon" href="icon/favicon-32x32.png">
-
 	<meta name="description" content="Online Movies, TV Shows & Cinema HTML Template">
 	<meta name="keywords" content="">
 	<meta name="author" content="Dmitry Volkov">
@@ -64,15 +63,15 @@ include("./../labraries/function.php");
 			<div class="sidebar__user-img">
 				<img src="img/user.svg" alt="">
 			</div>
-
+			
 			<div class="sidebar__user-title">
 				<span>Admin</span>
-				<p>John Doe</p>
+				<p> <?php echo $_SESSION['username'] ?></p>
 			</div>
 
-			<button class="sidebar__user-btn" type="button">
-				<i class="ti ti-logout"></i>
-			</button>
+			<!-- <a href="" class="sidebar__user-btn" type="button">
+				<i class="ti ti-logout"></i> -->
+			<a href="./../logout.php" class="sidebar__user-btn" ><i class="ti ti-logout"></i></a>
 		</div>
 		<!-- end sidebar user -->
 
@@ -108,9 +107,14 @@ include("./../labraries/function.php");
 				</li>
 
 				<li class="sidebar__nav-item">
+					<a href="show-admin.php" class="sidebar__nav-link"><i class="bi bi-shop-window"></i><span>Shows</span></a>
+				</li>
+				<li class="sidebar__nav-item">
+					<a href="show-tim-admin.php" class="sidebar__nav-link"><i class="bi bi-clock"></i><span>Show Time</span></a>
+				</li>
+				<li class="sidebar__nav-item">
 					<a href="booking-admin.php" class="sidebar__nav-link"><i class="bi bi-book"></i><span>Booking</span></a>
 				</li>
-
 
 				<li class="sidebar__nav-item">
 					<a href="https://hotflix.volkovdesign.com/main/index.html" class="sidebar__nav-link"><i class="ti ti-arrow-left"></i> <span>Back to HotFlix</span></a>
@@ -124,3 +128,5 @@ include("./../labraries/function.php");
 		<!-- end sidebar copyright -->
 	</div>
 	<!-- end sidebar -->
+</body>
+</html>

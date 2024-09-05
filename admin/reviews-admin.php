@@ -20,7 +20,7 @@ $reviews=mysqli_query($conn,$sql);
 						<span class="main__title-stat">3,702 Total</span>
 						
 						<div class="main__title-wrap">
-						<a href="add-theater.php" class="main__title-link">add reviews</a>
+						<a href="add-review.php" class="main__title-link">add reviews</a>
 						
 							<select class="filter__select" name="sort" id="filter__sort">
 								<option value="0">Date created</option>
@@ -51,7 +51,7 @@ $reviews=mysqli_query($conn,$sql);
 									<th>User Name</th>
 									<th>Movie</th>
 									<th>Rating</th>
-									<th>Date</th>
+									<th>Date:time</th>
 									<th>Comments</th>
 								</tr>
 							</thead>
@@ -94,7 +94,7 @@ $reviews=mysqli_query($conn,$sql);
 											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--banned" data-bs-target="#modal-status">
 												<i class="ti ti-lock"></i>
 											</button>
-											<a href="edit-theater.php?t_id=<?php echo $theater['theater_id']?>" class="catalog__btn catalog__btn--edit">
+											<a href="edit-review.php?r_id=<?php echo  $review['review_id']?>" class="catalog__btn catalog__btn--edit">
 												<i class="ti ti-edit"></i>
 											</a>
 											<a href="delete-review.php?r_id=<?php echo $review['review_id']?>" class="catalog__btn catalog__btn--delete">
