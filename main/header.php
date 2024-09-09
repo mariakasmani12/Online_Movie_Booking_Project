@@ -45,6 +45,11 @@ session_start();
     padding: 10px 20px; /* Increase padding */
     margin-right: 10px; /* Adjust spacing */
 }
+.dropdown-menu  .dropdown-item:hover{
+	color : yellow;
+	background:#1b1b1a;
+}
+	
 
 </style>
 <body>
@@ -109,14 +114,14 @@ session_start();
 
 							<!-- dropdown -->
 							<div class="header__profile">
-                             <?php if( isset($_SESSION["login"])) { ?>
+                             <?php if( isset($_SESSION["login"]) && $_SESSION['role_id']==3) { ?>
                               <a class="header__sign-in header__sign-in--user" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                              <i class="ti ti-user"></i>
                             <span><?php echo htmlspecialchars($_SESSION['username']); ?></span>
                              </a>
-                             <ul class="dropdown-menu dropdown-menu-end">
-                             <li><a class="dropdown-item" href="profile.html"><i class="ti ti-ghost"></i>Profile</a></li>
-                             <li><a class="dropdown-item" href="logout.php"><i class="ti ti-logout"></i>Logout</a></li>
+                             <ul class="dropdown-menu dropdown-menu-end bg-dark ">
+                             <li><a class="dropdown-item text-warning" href="profile.html"><i class="ti ti-ghost"></i>Profile</a></li>
+                             <li><a class="dropdown-item text-warning" href="../logout.php"><i class="ti ti-logout"></i>Logout</a></li>
                             </ul>
                             <?php } else { ?>
                            <a class="header__sign-in text-warning" href="../login.php" role="button">Login</a>

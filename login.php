@@ -2,7 +2,7 @@
 include("connection/connection.php");
 include("labraries/function.php");
 
-session_start(); // Start the session
+session_start();
 
 $usernames = $password = "";
 $usernamesErr = $passwordErr = $loginErr = "";
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // Escape the username to prevent SQL injection
         $usernames = mysqli_real_escape_string($conn, $usernames);
 
-        $logins_sql = "SELECT l.password, l.username, u.name, u.role_id, r.role
+        $logins_sql = "SELECT *
                        FROM login AS l 
                        LEFT JOIN user AS u ON l.user_id = u.user_id 
                        LEFT JOIN role AS r ON u.role_id = r.role_id
@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             if ($password==$login['password']) { 
                 // Passwords match, continue
                 $_SESSION["login"] = true;
+                $_SESSION["user_id"] = $login['user_id'];
                 $_SESSION["username"] = $login['username'];
                 $_SESSION["name"] = $login['name'];
                 $_SESSION["role_id"] = $login['role_id'];
@@ -64,14 +65,20 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
+<!-- Mirrored from hotflix.volkovdesign.com/main/signin.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 20 Aug 2024 08:40:08 GMT -->
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/splide.min.css">
 	<link rel="stylesheet" href="css/slimselect.css">
-	<link rel="stylesheet" href="css/admin.css">
+	<link rel="stylesheet" href="css/plyr.css">
+	<link rel="stylesheet" href="css/photoswipe.css">
+	<link rel="stylesheet" href="css/default-skin.css">
+	<link rel="stylesheet" href="css/main.css">
 
 	<!-- Icon font -->
 	<link rel="stylesheet" href="webfont/tabler-icons.min.css">
@@ -87,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </head>
 
 <body>
-	<div class="sign section--bg" data-bg="img/section/section.jpg">
+<div class="sign section--bg" data-bg="img/bg/section__bg.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
@@ -99,12 +106,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 							</a>
 
 							<div class="sign__group">
-                                <label for="username">Username <span class="text-danger">*<?php echo htmlspecialchars($usernamesErr); ?></span></label>
+                                <label for="username" class="text-light">Username <span class="text-danger">*<?php echo htmlspecialchars($usernamesErr); ?></span></label>
 								<input type="text" class="sign__input" placeholder="Username" name="username" value="<?php echo htmlspecialchars($usernames); ?>">
 							</div>
 
 							<div class="sign__group">
-                                <label for="password">Password <span class="text-danger">*<?php echo htmlspecialchars($passwordErr); ?></span></label>
+                                <label for="password" class="text-light">Password <span class="text-danger">*<?php echo htmlspecialchars($passwordErr); ?></span></label>
 								<input type="password" class="sign__input" placeholder="Password" name="password">
 							</div>
 
@@ -131,10 +138,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		</div>
 	</div>
 
-	<!-- JS -->
-	<script src="js/bootstrap.bundle.min.js"></script>
+		<!-- JS -->
+        <script src="js/bootstrap.bundle.min.js"></script>
+	<script src="js/splide.min.js"></script>
 	<script src="js/slimselect.min.js"></script>
 	<script src="js/smooth-scrollbar.js"></script>
-	<script src="js/admin.js"></script>
+	<script src="js/plyr.min.js"></script>
+	<script src="js/photoswipe.min.js"></script>
+	<script src="js/photoswipe-ui-default.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
 </body>
 </html>

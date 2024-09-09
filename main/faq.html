@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
+	if ($th = mysqli_query($conn, $sql_book)) {
+        $show_availability_displayed = true;
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
 <!-- Mirrored from hotflix.volkovdesign.com/main/faq.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 20 Aug 2024 08:40:08 GMT -->
 <head>
 	<meta charset="utf-8">

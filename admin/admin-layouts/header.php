@@ -2,7 +2,6 @@
 ob_start();
 require("./../connection/connection.php");
 include("./../labraries/function.php");
-session_start();
 
 // Check if the user is logged in and has the admin role
 
@@ -28,7 +27,14 @@ session_start();
 	<meta name="author" content="Dmitry Volkov">
 	<title>HotFlix – Online Movies, TV Shows & Cinema HTML Template</title>
 </head>
+<?php
+session_start();
+if(!($_SESSION['login'] && $_SESSION['role_id'] == 1)) {
+	header("Location:./../login.php");
+	exit();
+  }
 
+?>
 <body>
 	<!-- header -->
 	<header class="header">
