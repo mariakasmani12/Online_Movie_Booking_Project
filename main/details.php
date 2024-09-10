@@ -249,9 +249,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['save'])) {
                                         <td  style="color:white;"><?php echo htmlspecialchars($theater_info['time']); ?> - <?php echo htmlspecialchars($theater_info['time_name']); ?></td>
                                         <td  style="color:white;"><?php echo htmlspecialchars($theater_info['show_date']); ?></td>
                                         <td>
-                                         <a type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view"  style="background-color: #f9ab00; border: 2px solid #f9ab00; magrin:4px; padding:4px;  color:white;">
+                                         <a  href="booking-model.php?book=<?php  echo htmlspecialchars($theater_info['show_id']); ?>"type="button" class="catalog__btn catalog__btn--view"  style="background-color: #f9ab00; border: 2px solid #f9ab00; magrin:4px; padding:4px;  color:white;">
                                           Book Now
-                                        </button>
+                                </a>
                                         </td>
                                       
                                     </tr>
@@ -349,7 +349,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['save'])) {
 </section>
 <!-- end content -->
 
-<?php include("booking-model.php"); ?>
+
 <?php include("footer.php"); ?>
 </html>
 <?php

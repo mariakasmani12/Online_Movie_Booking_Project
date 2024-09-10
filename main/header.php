@@ -1,6 +1,6 @@
 <?php
 require("../connection/connection.php");
-include("../labraries/function.php");
+require_once("../labraries/function.php");
 session_start();
 ?>
 <!DOCTYPE html>
