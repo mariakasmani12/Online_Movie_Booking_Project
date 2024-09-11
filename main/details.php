@@ -4,6 +4,7 @@
 ob_start();
 include("header.php");
 
+
 $sql="SELECT * FROM reviews AS r
 JOIN user AS u ON r.user_id=u.user_id
 JOIN movies AS m ON r.movie_id=m.movie_id";
@@ -75,7 +76,8 @@ $mo = mysqli_query($conn, $sql_m);
 $show_availability_displayed = false;
 $movie_id = mysqli_real_escape_string($conn, $_GET['id']);
 
-if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['save'])) {
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['save']))
+ {
     $theater = mysqli_real_escape_string($conn, $_POST['theater']);
     $movie_id = mysqli_real_escape_string($conn, $_POST['movie_id']);
 
@@ -350,7 +352,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['save'])) {
 <!-- end content -->
 
 
-<?php include("footer.php"); ?>
+<?php include("footer.php");
+ob_flush();
+?>
 </html>
 <?php
 // End output buffering and flush

@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $_SESSION["name"] = $login['name'];
                 $_SESSION["role_id"] = $login['role_id'];
                 $_SESSION["role"] = $login['role'];
-
+                
                 if ($_SESSION['login'] && $_SESSION['role_id'] == 1) {
                     header("Location: admin/index.php");
                     exit();
