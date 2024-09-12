@@ -101,7 +101,7 @@ if(!($_SESSION['login'] && $_SESSION['role_id'] == 1)) {
 				</li>
                 
 				<li class="sidebar__nav-item">
-					<a href="screen-admin.php" class="sidebar__nav-link"><i class="bi bi-fullscreen"></i><span>Screens</span></a>
+					<a href="list-screen.php" class="sidebar__nav-link"><i class="bi bi-fullscreen"></i><span>Screens</span></a>
 				</li>
 
                 <li class="sidebar__nav-item">

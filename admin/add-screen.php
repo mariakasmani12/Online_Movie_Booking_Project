@@ -55,7 +55,7 @@
 
             if (mysqli_query($conn, $sql)) {
                 $successMsg = "New screen added successfully";
-                header("Location: list_screen.php");
+                header("Location: list-screen.php");
                 exit();
             } else {
                 $error = "Error: " . mysqli_error($conn);
