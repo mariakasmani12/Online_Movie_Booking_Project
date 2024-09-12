@@ -40,6 +40,7 @@ $shows=mysqli_query($conn,$sql);
 						
 					</div>
 				</div>
+				<a href="add-user.php" class="main__title-link">Add User</a>
 				<!-- end main title -->
 
 				<!-- users -->

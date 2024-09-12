@@ -1,100 +1,135 @@
-<?php
-include("admin-layouts/header.php");
-?>
-	<!-- main content -->
-	<main class="main">
-		<div class="container-fluid">
-			<div class="row">
-				<!-- main title -->
-				<div class="col-12">
-					<div class="main__title">
-						<h2>Add screen</h2>
-					</div>
-				</div>
-				<!-- end main title -->
+    <?php
+ include("admin-layouts/header.php");
 
-				<!-- form -->
-				<div class="col-12">
-					<form action="#" class="sign__form sign__form--add">
-						<div class="row">
-							<div class="col-12 col-xl-7">
-								<div class="row">
-									
+    
+    $theaterId = $screen_name = $total_seats_available = "";
+    $theaterIdErr = $screen_nameErr = $total_seatsErr = "";
+    $successMsg = "";
+    $error = "";
 
-									<div class="col-12">
-										<div class="sign__group">
-											<select class="sign__selectjs" id="sign__genre" multiple>
-												<option value="Action">Action</option>
-												<option value="Animation">Animation</option>
-												<option value="Comedy">Comedy</option>
-												<option value="Crime">Crime</option>
-												<option value="Drama">Drama</option>
-												<option value="Fantasy">Fantasy</option>
-												<option value="Historical">Historical</option>
-												<option value="Horror">Horror</option>
-												<option value="Romance">Romance</option>
-												<option value="Science-fiction">Science-fiction</option>
-												<option value="Thriller">Thriller</option>
-												<option value="Western">Western</option>
-												<option value="Otheer">Otheer</option>
-											</select>
-										</div>
-									</div>
+    // Fetch theater options from the database
+    $theaterOptions = '';
+    $sql = "SELECT t.theater_Id, t.theater_name
+            FROM theater t
+            LEFT JOIN screen s ON t.theater_Id = s.theater_Id
+            GROUP BY t.theater_Id, t.theater_name";
+    $result = mysqli_query($conn, $sql);
 
-									<div class="col-12 col-md-6 col-xl-4">
-								<div class="sign__group">
-									<select class="sign__selectjs" id="sign__director" multiple>
-										<option value="Matt Jones">Matt Jones</option>
-										<option value="Gene Graham">Gene Graham</option>
-										<option value="Rosa Lee">Rosa Lee</option>
-										<option value="Brian Cranston">Brian Cranston</option>
-										<option value="Tess Harper">Tess Harper</option>
-										<option value="Eliza Josceline">Eliza Josceline</option>
-										<option value="Otto Bree">Otto Bree</option>
-										<option value="Kathie Corl">Kathie Corl</option>
-										<option value="Georgiana Patti">Georgiana Patti</option>
-										<option value="Cong Duong">Cong Duong</option>
-										<option value="Felix Autumn">Felix Autumn</option>
-										<option value="Sophie Moore">Sophie Moore</option>
-									</select>
-								</div>
-							</div>
-									<div class="col-12 col-md-6">
-										<div class="sign__group">
-											<input type="text" class="sign__input" placeholder="Running time">
-										</div>
-									</div>
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $theaterOptions .= "<option value='" . htmlspecialchars($row['theater_Id']) . "'>" . htmlspecialchars($row['theater_name']) . "</option>";
+        }
+    } else {
+        $error = "Error fetching theaters: " . mysqli_error($conn);
+    }
 
-									<div class="col-12 col-md-6">
-										<div class="sign__group">
-											<input type="text" class="sign__input" placeholder="Premiere date">
-										</div>
-									</div>
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $theaterId = test_input($_POST['theaterId']);
+        $screen_name = test_input($_POST['screen_name']);
+        $total_seats_available = test_input($_POST['total_seats_available']);
 
-								</div>
-							</div>
+        
+        if (empty($theaterId)) {
+            $theaterIdErr = "Theater must be selected.";
+        }
 
-							
-								
+        // Validate screen_name
+        if (empty($screen_name)) {
+            $screen_nameErr = "Screen name is required.";
+        } elseif (!preg_match("/^[a-zA-Z0-9 ]*$/", $screen_name)) {
+            $screen_nameErr = "Only letters, numbers, and spaces are allowed in the screen name.";
+        }
 
-							<div class="col-12">
-								<button type="button" class="sign__btn sign__btn--small"><span>Publish</span></button>
-							</div>
-						</div>
-					</form>
-				</div>
-				<!-- end form -->
-			</div>
-		</div>
-	</main>
-	<!-- end main content -->
+    
+        if (empty($total_seats_available)) {
+            $total_seatsErr = "Total seats are required.";
+        } elseif (!is_numeric($total_seats_available)) {
+            $total_seatsErr = "Total seats must be a number.";
+        }
 
-	<!-- JS -->
-	<script src="js/bootstrap.bundle.min.js"></script>
-	<script src="js/slimselect.min.js"></script>
-	<script src="js/smooth-scrollbar.js"></script>
-	<script src="js/admin.js"></script>
-</body>
+        // ERROR CHECK
+        if (empty($theaterIdErr) && empty($screen_nameErr) && empty($total_seatsErr)) {
+            
+            $sql = "INSERT INTO screen (theater_Id, screen_name, total_seats_available) 
+                    VALUES ('$theaterId', '$screen_name', '$total_seats_available')";
 
-<!-- Mirrored from hotflix.volkovdesign.com/admin/add-item.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 20 Aug 2024 08:51:43 GMT -->
-</html>
+            if (mysqli_query($conn, $sql)) {
+                $successMsg = "New screen added successfully";
+                header("Location: list_screen.php");
+                exit();
+            } else {
+                $error = "Error: " . mysqli_error($conn);
+            }
+        } else {
+            $error = "Please correct the errors and try again.";
+        }
+    }
+    ?>
+
+    <!-- main content -->
+    <main class="main">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- main title -->
+                <div class="col-12">
+                    <div class="main__title">
+                        <h2>Add screen</h2>
+                    </div>
+                </div>
+
+                <?php if (!empty($error)): ?>
+                    <p class='error text-danger'>
+                        <?php echo $error; ?>
+                    </p>
+                <?php endif; ?>
+
+                <?php if (!empty($successMsg)): ?>
+                    <p class='success text-success'>
+                        <?php echo $successMsg; ?>
+                    </p>
+                <?php endif; ?>
+
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-12 col-xl-7">
+                            <div class="row">
+                            
+                                <div class="col-12">
+                                    <div class="sign__group">
+                                        <label for="theaterId" class="form-label text-light">THEATER<span class="text-danger">*<?php echo $theaterIdErr ?></span></label>
+                                        <select name="theaterId" class="sign__input" required>
+                                            <option value="">Select Theater</option>
+                                            <?php echo $theaterOptions; ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            
+                                <div class="col-12">
+                                    <div class="sign__group">
+                                        <label for="screen_name" class="form-label text-light">SCREEN NAME<span class="text-danger">*<?php echo $screen_nameErr ?></span></label>
+                                        <input type="text" class="sign__input" name="screen_name" value="<?php echo htmlspecialchars($screen_name); ?>" required>
+                                    </div>
+                                </div>
+
+                            
+                                <div class="col-12">
+                                    <div class="sign__group">
+                                        <label for="total_seats_available" class="form-label text-light">TOTAL SEATS<span class="text-danger">*<?php echo $total_seatsErr ?></span></label>
+                                        <input type="text" class="sign__input" name="total_seats_available" value="<?php echo htmlspecialchars($total_seats_available); ?>" required>
+                                    </div>
+                                </div>
+
+                        
+                                <div class="col-12">
+                                    <input type="submit" value="ADD Screen" class="sign__btn sign__btn--small">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    </body>
+    </html>
