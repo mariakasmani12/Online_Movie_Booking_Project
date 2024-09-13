@@ -1,7 +1,6 @@
 <?php
 include("admin-layouts/header.php");
 
-
 $screenId = $theaterId = $screen_name = $total_seats = "";
 $theaterIdErr = $screen_nameErr = $total_seatsErr = "";
 $successMsg = "";
@@ -30,14 +29,12 @@ if (isset($_GET['id'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
     $screen_name = test_input($_POST['screen_name']);
-    $total_seats = test_input($_POST['total_seats_available']);
-    
-    
+    $total_seats = test_input($_POST['total_seats']);
+
     if (empty($theaterId)) {
         $theaterIdErr = "Theater must be selected.";
     }
 
-    
     if (empty($screen_name)) {
         $screen_nameErr = "Screen name is required.";
     } elseif (!preg_match("/^[a-zA-Z0-9 ]*$/", $screen_name)) {
@@ -50,15 +47,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $total_seatsErr = "Total seats must be a number.";
     }
 
-    
     if (empty($theaterIdErr) && empty($screen_nameErr) && empty($total_seatsErr)) {
-        
         $sql = "UPDATE screen 
                 SET , screen_name='$screen_name', total_seats='$total_seats' 
                 WHERE screen_id='$screenId'";
 
         if (mysqli_query($conn, $sql)) {
             $successMsg = "Screen updated successfully";
+            header("Location: list-screen.php");
             header("Location: list-screen.php");
             exit();
         } else {
@@ -69,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
