@@ -59,12 +59,12 @@ $bookings=mysqli_query($conn,$sql_join);
 							<!-- content tabs nav -->
 							<ul class="nav nav-tabs content__tabs content__tabs--profile" id="content__tabs" role="tablist">
 								<li class="nav-item" role="presentation">
-									<button id="1-tab" class="active" data-bs-toggle="tab" data-bs-target="#tab-1" type="button" role="tab" aria-controls="tab-1" aria-selected="true">bookings</button>
+									<button href="#"id="1-tab" class="active" data-bs-toggle="tab" data-bs-target="#tab-1" type="button" role="tab" aria-controls="tab-1" aria-selected="true">bookings</a>
 								</li>
 
-								<!-- <li class="nav-item" role="presentation">
-									<button id="4-tab" data-bs-toggle="tab" data-bs-target="#tab-4" type="button" role="tab" aria-controls="tab-4" aria-selected="false">profile</button>
-								</li> -->
+								<li class="nav-item" role="presentation">
+									<button   id="4-tab" data-bs-toggle="tab" data-bs-target="#tab-4" type="button" role="tab" aria-controls="tab-4" aria-selected="false"><a class="text-light" href="user-profile.php"> Profile</a></button>
+								</li>
 							</ul>
 							<!-- end content tabs nav -->
 
@@ -165,6 +165,7 @@ $bookings=mysqli_query($conn,$sql_join);
 									</table>
 								</div>
 								</center>
+								
 							</div>
 						</div>
 						<!-- end dashbox -->
@@ -177,15 +178,7 @@ $bookings=mysqli_query($conn,$sql_join);
 include("footer.php");
 ?>
 
-	<!-- JS -->
-	<script src="js/bootstrap.bundle.min.js"></script>
-	<script src="js/splide.min.js"></script>
-	<script src="js/slimselect.min.js"></script>
-	<script src="js/smooth-scrollbar.js"></script>
-	<script src="js/plyr.min.js"></script>
-	<script src="js/photoswipe.min.js"></script>
-	<script src="js/photoswipe-ui-default.min.js"></script>
-	<script src="js/main.js"></script>
+
 </body>
 
 <!-- Mirrored from hotflix.volkovdesign.com/main/profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 20 Aug 2024 08:40:02 GMT -->

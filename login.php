@@ -102,9 +102,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 						<!-- authorization form -->
 						<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" class="sign__form">
 							<a href="index.html" class="sign__logo">
-								<img src="img/logo.svg" alt="">
+							<!-- <img src="images/logo.png" alt=" "style="height:190px; "> -->
+							 <h1 class="text-bold" style="font-size:bold;"> <span class="text-warning">FILM</span><span class="text-light">IX</span></h1>
 							</a>
-
+							<?php if(!empty($loginErr)): ?>
+                                <div class="text-danger"><?php echo htmlspecialchars($loginErr); ?></div>
+                            <?php endif; ?>
 							<div class="sign__group">
                                 <label for="username" class="text-light">Username <span class="text-danger">*<?php echo htmlspecialchars($usernamesErr); ?></span></label>
 								<input type="text" class="sign__input" placeholder="Username" name="username" value="<?php echo htmlspecialchars($usernames); ?>">
@@ -116,20 +119,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 							</div>
 
                             <!-- Display login error if any -->
-                            <?php if(!empty($loginErr)): ?>
-                                <div class="text-danger"><?php echo htmlspecialchars($loginErr); ?></div>
-                            <?php endif; ?>
+                            
 
-							<div class="sign__group sign__group--checkbox">
-								<input id="remember" name="remember" type="checkbox" checked="checked">
-								<label for="remember">Remember Me</label>
-							</div>
+							<
 
 							<input class="sign__btn" type="submit" value="Sign in">
 
-							<span class="sign__text">Don't have an account? <a href="signup.html">Sign up!</a></span>
+							<span class="sign__text">Don't have an account? <a href="signup.php">Sign up!</a></span>
 
-							<span class="sign__text"><a href="forgot.html">Forgot password?</a></span>
 						</form>
 						<!-- end authorization form -->
 					</div>

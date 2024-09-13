@@ -25,7 +25,7 @@ include("./../labraries/function.php");
 	<meta name="description" content="Online Movies, TV Shows & Cinema HTML Template">
 	<meta name="keywords" content="">
 	<meta name="author" content="Dmitry Volkov">
-	<title>HotFlix – Online Movies, TV Shows & Cinema HTML Template</title>
+	<title>Filmix</title>
 </head>
 <?php
 session_start();
@@ -60,7 +60,7 @@ if(!($_SESSION['login'] && $_SESSION['role_id'] == 1)) {
 	<div class="sidebar">
 		<!-- sidebar logo -->
 		<a href="index.html" class="sidebar__logo">
-			<img src="img/logo.svg" alt="">
+		<h1 class="text-bold" style="font-size:bold;"> <span class="text-warning">FILM</span><span class="text-light">IX</span></h1>
 		</a>
 		<!-- end sidebar logo -->
 		
@@ -101,7 +101,7 @@ if(!($_SESSION['login'] && $_SESSION['role_id'] == 1)) {
 				</li>
                 
 				<li class="sidebar__nav-item">
-					<a href="screen-admin.php" class="sidebar__nav-link"><i class="bi bi-fullscreen"></i><span>Screens</span></a>
+					<a href="list-screen.php" class="sidebar__nav-link"><i class="bi bi-fullscreen"></i><span>Screens</span></a>
 				</li>
 
                 <li class="sidebar__nav-item">
@@ -123,7 +123,7 @@ if(!($_SESSION['login'] && $_SESSION['role_id'] == 1)) {
 				</li>
 
 				<li class="sidebar__nav-item">
-					<a href="https://hotflix.volkovdesign.com/main/index.html" class="sidebar__nav-link"><i class="ti ti-arrow-left"></i> <span>Back to HotFlix</span></a>
+					<a href="../main/index2.php" class="sidebar__nav-link"><i class="ti ti-arrow-left"></i> <span>Back to FILMIX</span></a>
 				</li>
 			</ul>
 		</div>

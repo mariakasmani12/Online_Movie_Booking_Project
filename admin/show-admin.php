@@ -3,7 +3,7 @@ include("admin-layouts/header.php");
 
 $sql="SELECT * FROM `shows` AS sh
 JOIN screen AS sc ON sh.screen_id=sc.screen_id
-JOIN theater AS th ON sc.theater_id =th.theater_id
+JOIN theater AS th ON sh.theater_id=th.theater_id
 JOIN movies AS m ON sh.movie_id=m.movie_id
 JOIN show_timing AS st ON sh.show_time_id=st.show_time_id
 ";

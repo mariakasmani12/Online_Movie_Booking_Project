@@ -117,31 +117,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 											<input type="hidden" class="sign__input"  name="seat_id" value="<?php echo $seatid ?>">
 										</div>
 									</div>
-                                <div class="col-12">
-                                    <div class="sign__group">
-                                        <label for="theater_name" class="form-label text-light">theater <span class="text-danger">*<?php echo $theaterErr; ?></span></label>
-                                        <select class="sign__selectjs" id="sign__genre" name="theater_name">
-                                        <option value="0" <?php if (empty($theater) || $theater == "0") echo "selected"; ?>>Select theater</option>
-                                    <?php while ($thet = mysqli_fetch_assoc($theaters)) { ?>
-                                        <option value="<?php echo $thet['theater_id'] ?>" <?php if (isset($theater) && $theater == $thet['theater_id']) echo "selected"; ?>><?php echo $thet['theater_name'] ?></option>
-                                    <?php } ?>
-                            
-                                        </select>
-                                    </div>
-                                </div>
+                               
 
-                                <div class="col-12">
-                                    <div class="sign__group">
-                                        <label for="screen_name" class="form-label text-light">screen <span class="text-danger">*<?php    echo $screenErr; ?></span></label>
-                                        <select class="sign__selectjs" id="sign__director" name="screen_name">
-                                            <option value="0" <?php if (empty($screen) || $screen == "0") echo "selected"; ?>>Select screen</option>
-                                    <?php while ($scr = mysqli_fetch_assoc($screens)) { ?>
-                                        <option value="<?php echo $scr['screen_id'] ?>" <?php if (isset($screen) && $screen == $scr['screen_id']) echo "selected"; ?>><?php echo $scr['screen_name'] ?></option>
-                                    <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-
+                                
                                 <div class="col-12">
                                     <div class="sign__group">
                                         <label for="class_type" class="form-label text-light">class_type <span class="text-danger">*<?php echo $seat_classErr; ?></span></label>

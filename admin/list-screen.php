@@ -2,9 +2,9 @@
 include("admin-layouts/header.php");
 
 // Fetch screens from the database
-$sql = "SELECT s.screen_Id, s.screen_name, t.theater_name,total_seats_available
-FROM screen s
-LEFT JOIN theater t ON s.theater_Id = t.theater_Id";
+$sql = "SELECT s.screen_id, s.screen_name,total_seats_available
+FROM screen s";
+
 
 $result = mysqli_query($conn, $sql);
 
@@ -38,7 +38,6 @@ if (!$result) {
                         <thead>
                             <tr>
                                 <th>Screen ID</th>
-                                <th>Theater</th>
                                 <th>Screen Name</th>
                                 <th>Total Seats</th>
                                 <th>Actions</th>
@@ -47,8 +46,8 @@ if (!$result) {
                         <tbody>
                             <?php while ($row = mysqli_fetch_assoc($result)): ?>
                                 <tr>
-                                    <td><?php echo $row['screen_Id']; ?></td>
-                                    <td><?php echo htmlspecialchars($row['theater_name']); ?></td>
+                                    <td><?php echo $row['screen_id']; ?></td>
+                                    
                                     <td><?php echo htmlspecialchars($row['screen_name']); ?></td>
                                     <td><?php echo htmlspecialchars($row['total_seats_available']); ?></td>
                                    	<td>
@@ -56,10 +55,10 @@ if (!$result) {
 											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--banned" data-bs-target="#modal-status">
 												<i class="ti ti-lock"></i>
 											</button>
-											<a href="edit-screen.php?id=<?php echo $row['screen_Id']; ?>" class="catalog__btn catalog__btn--edit">
+											<a href="edit-screen.php?id=<?php echo $row['screen_id']; ?>" class="catalog__btn catalog__btn--edit">
 												<i class="ti ti-edit"></i>
 											</a>
-											<a href="delete-screen.php?id=<?php echo $row['screen_Id']; ?>" class="catalog__btn catalog__btn--delete">
+											<a href="delete-screen.php?id=<?php echo $row['screen_id']; ?>" class="catalog__btn catalog__btn--delete">
 												<i class="ti ti-trash"></i>
 								            </a>
 										</div>

@@ -49,7 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
     if (empty($theaterErr) && empty($screenErr) && empty($moviesErr) && empty($show_timeErr) && empty($show_dateErr)) {
-        $sql_show_insert = "INSERT INTO `show` (`show_id`, `screen_id`, `movie_id`, `show_time_id`, `show_date`) VALUES (NULL, '$screen', '$movies', '$show_time', '$show_date');";
+        $sql_show_insert = "
+        INSERT INTO `shows` (`show_id`, `screen_id`, `movie_id`, `show_time_id`, `show_date`, `theater_id`) VALUES (NULL, '$screen', '$movies', '$show_time', '$show_date', '$theater')";
         if (mysqli_query($conn, $sql_show_insert)) {
             header("Location: show-admin.php");
             exit();

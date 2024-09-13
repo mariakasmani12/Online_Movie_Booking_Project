@@ -3,6 +3,10 @@
 <?php 
 ob_start();
 include("header.php");
+if(!($_SESSION['login'] && $_SESSION['role_id'] == 1)) {
+	header("Location:./../login.php");
+	exit();
+  }
 
 
 $sql="SELECT * FROM reviews AS r
@@ -95,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['save']))
 
     $sql_book = "SELECT * FROM shows AS sho 
     JOIN screen AS screen ON sho.screen_id = screen.screen_id
-    JOIN theater AS th ON screen.theater_id = th.theater_id
+    JOIN theater AS th ON sho.theater_id = th.theater_id
     JOIN show_timing AS st ON sho.show_time_id = st.show_time_id
     JOIN movies AS m ON sho.movie_id = m.movie_id 
     WHERE th.theater_id = '$theater' AND sho.movie_id = '$movie_id'";

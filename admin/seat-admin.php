@@ -1,9 +1,7 @@
 <?php
 include("admin-layouts/header.php");
 
-$sql="SELECT * FROM `seat_class` AS sc
-JOIN `screen` AS s ON sc.screen_id=s.screen_id
-JOIN `theater` AS t ON s.theater_id=t.theater_id ";
+$sql="SELECT * FROM `seat_class` ";
 
 $classes=mysqli_query($conn,$sql);
 ?>
@@ -47,8 +45,7 @@ $classes=mysqli_query($conn,$sql);
 							<thead>
 								<tr>
 								    <th>#</th>
-									<th>Theater</th>
-									<th>Screen</th>
+									
 									<th>Seat Class</th>
 									<th>price</th>
 									<th>action</th>
@@ -65,16 +62,7 @@ $classes=mysqli_query($conn,$sql);
 									<td>
 										<div class="catalog__text"><?php echo $srno?></div>
 									</td>
-									<td>
-										<div class="catalog__text">
-										<?php echo $class['theater_name']?>
-										</div>
-									</td>
-									<td>
-										<div class="catalog__text">
-										<?php echo $class['screen_name']?>
-										</div>
-									</td>
+								
 									<td>
 										<div class="catalog__text">
 										<?php echo $class['class_type']?>
@@ -82,7 +70,7 @@ $classes=mysqli_query($conn,$sql);
 									</td>
 									<td>
 										<div class="catalog__text">
-										$<?php echo $class['price']?>
+										<?php echo $class['price']?>Rs
 										</div>
 									</td>
 									<td>

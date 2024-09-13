@@ -60,8 +60,8 @@ session_start();
 				<div class="col-12">
 					<div class="header__content">
 						<!-- header logo -->
-						<a href="index.html" class="header__logo">
-							<img src="img/logo.svg" alt="">
+						<a href="index2.php"  class="header__logo">
+						<h1 class="text-bold" style="font-size:bold;"> <span class="text-warning">FILM</span><span class="text-light">IX</span></h1>
 						</a>
 						<!-- end header logo -->
 
@@ -69,13 +69,13 @@ session_start();
 						<ul class="header__nav">
 							<!-- dropdown -->
 							<li class="header__nav-item">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Home</a>
+								<a class="header__nav-link" href="index2.php">Home</a>
 							</li>
 							<!-- end dropdown -->
 
 							<!-- dropdown -->
 							<li class="header__nav-item">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Movies </a>
+								<a class="header__nav-link" href="movies.php" >Movies </a>
 							</li>
 							<!-- end dropdown -->
 
@@ -83,10 +83,14 @@ session_start();
 
 							<!-- dropdown -->
 							<li class="header__nav-item">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Contacts Us</a>
+								<a class="header__nav-link" href="contacts.php" role="button" >Contacts Us</a>
 
 							</li>
 							<!-- end dropdown -->
+							<li class="header__nav-item">
+								<a class="header__nav-link" href="about.php" role="button" >about Us</a>
+
+							</li>
 
 							<!-- dropdown -->
 							
@@ -114,13 +118,13 @@ session_start();
 
 							<!-- dropdown -->
 							<div class="header__profile">
-                             <?php if( isset($_SESSION["login"]) && $_SESSION['role_id']==3) { ?>
+                             <?php if( isset($_SESSION["login"]) ) { ?>
                               <a class="header__sign-in header__sign-in--user" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                              <i class="ti ti-user"></i>
                             <span><?php echo htmlspecialchars($_SESSION['username']); ?></span>
                              </a>
                              <ul class="dropdown-menu dropdown-menu-end bg-dark ">
-                             <li><a class="dropdown-item text-warning" href="profile.html"><i class="ti ti-ghost"></i>Profile</a></li>
+                             <li><a class="dropdown-item text-warning" href="profile.php"><i class="ti ti-ghost"></i>Profile</a></li>
                              <li><a class="dropdown-item text-warning" href="../logout.php"><i class="ti ti-logout"></i>Logout</a></li>
                             </ul>
                             <?php } else { ?>

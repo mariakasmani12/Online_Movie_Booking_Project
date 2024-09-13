@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 						<!-- Registration form -->
 						<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" class="sign__form">
 							<a href="index.html" class="sign__logo">
-								<img src="img/logo.svg" alt="">
+							<h1 class="text-bold" style="font-size:bold;"> <span class="text-warning">FILM</span><span class="text-light">IX</span></h1>
 							</a>
 
 							<!-- Name field -->

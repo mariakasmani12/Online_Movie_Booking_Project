@@ -12,17 +12,7 @@ $theater = $screen = $seat_class = $price = "";
 $theaterErr = $screenErr = $seat_classErr = $priceErr = "";
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    if (empty($_POST["theater_name"])) {
-        $theaterErr = "Theater is required";
-    } else {
-        $theater = test_input($_POST["theater_name"]);
-    }
-
-    if (empty($_POST["screen_name"])) {
-        $screenErr = "Screen is required";
-    } else {
-        $screen = test_input($_POST["screen_name"]);
-    }
+   
 
     if (empty($_POST["class_type"])) {
         $seat_classErr = "Seat class is required";
@@ -36,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $price = test_input($_POST["price"]);
     }
 
-    if (empty($theaterErr) && empty($screenErr) && empty($seat_classErr) && empty($priceErr)) {
-        $sql_theater_insert = "INSERT INTO `seat_class` (`seat_id`, `screen_id`, `class_type`, `price`) 
-                               VALUES (NULL, '$screen', '$seat_class', '$price')";
+    if (empty($seat_classErr) && empty($priceErr)) {
+        $sql_theater_insert = "INSERT INTO `seat_class` (`seat_id`,  `class_type`, `price`) 
+                               VALUES (NULL, '$seat_class', '$price')";
         if (mysqli_query($conn, $sql_theater_insert)) {
             header("Location: seat-admin.php");
             exit();
@@ -67,29 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     <div class="row">
                         <div class="col-12 col-xl-7">
                             <div class="row">
-                                <div class="col-12">
-                                    <div class="sign__group">
-                                        <label for="theater_name" class="form-label text-light">theater <span class="text-danger">*<?php echo $theaterErr; ?></span></label>
-                                        <select class="sign__selectjs" id="sign__genre" name="theater_name">
-                                            <option value="">Select theater</option>
-                                            <?php while ($thet = mysqli_fetch_assoc($theaters)) { ?>
-                                                <option value="<?php echo $thet['theater_id']; ?>"><?php echo $thet['theater_name']; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="sign__group">
-                                        <label for="screen_name" class="form-label text-light">screen <span class="text-danger">*<?php    echo $screenErr; ?></span></label>
-                                        <select class="sign__selectjs" id="sign__director" name="screen_name">
-                                            <option value="">Select screen</option>
-                                            <?php while ($scr = mysqli_fetch_assoc($screens)) { ?>
-                                                <option value="<?php echo $scr['screen_id']; ?>"><?php echo $scr['screen_name']; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
+                                
 
                                 <div class="col-12">
                                     <div class="sign__group">

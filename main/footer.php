@@ -6,15 +6,15 @@
 				<div class="col-12">
 					<div class="footer__content">
 						<a href="index.html" class="footer__logo">
-							<img src="img/logo.svg" alt="">
+						<h1 class="text-bold" style="font-size:bold;"> <span class="text-warning">FILM</span><span class="text-light">IX</span></h1>
 						</a>
 
-						<span class="footer__copyright">© HOTFLIX, 2019—2024 <br> Create by <a href="https://themeforest.net/user/dmitryvolkov/portfolio" target="_blank">Dmitry Volkov</a></span>
+						<span class="footer__copyright">© FILMIX, 2019—2024 <br> Create by <a href="https://themeforest.net/user/dmitryvolkov/portfolio" target="_blank">Dmitry Volkov</a></span>
 
 						<nav class="footer__nav">
-							<a href="about.html">About Us</a>
-							<a href="contacts.html">Contacts</a>
-							<a href="privacy.html">Privacy policy</a>
+							<a href="about.php">About Us</a>
+							<a href="contacts.php">Contacts</a>
+						
 						</nav>
 
 						<button class="footer__back" type="button">

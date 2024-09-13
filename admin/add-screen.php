@@ -8,23 +8,9 @@
     $error = "";
 
     // Fetch theater options from the database
-    $theaterOptions = '';
-    $sql = "SELECT t.theater_Id, t.theater_name
-            FROM theater t
-            LEFT JOIN screen s ON t.theater_Id = s.theater_Id
-            GROUP BY t.theater_Id, t.theater_name";
-    $result = mysqli_query($conn, $sql);
-
-    if ($result) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $theaterOptions .= "<option value='" . htmlspecialchars($row['theater_Id']) . "'>" . htmlspecialchars($row['theater_name']) . "</option>";
-        }
-    } else {
-        $error = "Error fetching theaters: " . mysqli_error($conn);
-    }
-
+    
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $theaterId = test_input($_POST['theaterId']);
+       
         $screen_name = test_input($_POST['screen_name']);
         $total_seats_available = test_input($_POST['total_seats_available']);
 
@@ -50,12 +36,12 @@
         // ERROR CHECK
         if (empty($theaterIdErr) && empty($screen_nameErr) && empty($total_seatsErr)) {
             
-            $sql = "INSERT INTO screen (theater_Id, screen_name, total_seats_available) 
-                    VALUES ('$theaterId', '$screen_name', '$total_seats_available')";
+            $sql = "INSERT INTO screen ( screen_name, total_seats_available) 
+                    VALUES (, '$screen_name', '$total_seats_available')";
 
             if (mysqli_query($conn, $sql)) {
                 $successMsg = "New screen added successfully";
-                header("Location: list_screen.php");
+                header("Location: list-screen.php");
                 exit();
             } else {
                 $error = "Error: " . mysqli_error($conn);
@@ -94,16 +80,7 @@
                         <div class="col-12 col-xl-7">
                             <div class="row">
                             
-                                <div class="col-12">
-                                    <div class="sign__group">
-                                        <label for="theaterId" class="form-label text-light">THEATER<span class="text-danger">*<?php echo $theaterIdErr ?></span></label>
-                                        <select name="theaterId" class="sign__input" required>
-                                            <option value="">Select Theater</option>
-                                            <?php echo $theaterOptions; ?>
-                                        </select>
-                                    </div>
-                                </div>
-
+                              
                             
                                 <div class="col-12">
                                     <div class="sign__group">

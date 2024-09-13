@@ -8,32 +8,18 @@ $successMsg = "";
 $error = "";
 
 // Fetch theater options from the database
-$theaterOptions = '';
-$sql = "SELECT theater_Id, theater_name FROM theater";
-$result = mysqli_query($conn, $sql);
 
-if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $theaterOptions .= "<option value='" . htmlspecialchars($row['theater_Id']) . "'";
-        if ($row['theater_Id'] == $theaterId) {
-            $theaterOptions .= " selected";
-        }
-        $theaterOptions .= ">" . htmlspecialchars($row['theater_name']) . "</option>";
-    }
-} else {
-    $error = "Error fetching theaters: " . mysqli_error($conn);
-}
 
 // Fetch existing screen details
 if (isset($_GET['id'])) {
     $screenId = $_GET['id'];
 
-    $sql = "SELECT * FROM screen WHERE screen_Id='$screenId'";
+    $sql = "SELECT * FROM screen WHERE screen_id='$screenId'";
     $result = mysqli_query($conn, $sql);
 
     if ($result && mysqli_num_rows($result) == 1) {
         $row = mysqli_fetch_assoc($result);
-        $theaterId = $row['theater_id'];
+        
         $screen_name = $row['screen_name'];
         $total_seats = $row['total_seats_available'];
     } else {
@@ -42,7 +28,7 @@ if (isset($_GET['id'])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $theaterId = test_input($_POST['theater_Id']);
+  
     $screen_name = test_input($_POST['screen_name']);
     $total_seats = test_input($_POST['total_seats_available']);
     
@@ -68,12 +54,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($theaterIdErr) && empty($screen_nameErr) && empty($total_seatsErr)) {
         
         $sql = "UPDATE screen 
-                SET theaterId='$theaterId', screen_name='$screen_name', total_seats='$total_seats' 
-                WHERE screenId='$screenId'";
+                SET , screen_name='$screen_name', total_seats='$total_seats' 
+                WHERE screen_id='$screenId'";
 
         if (mysqli_query($conn, $sql)) {
             $successMsg = "Screen updated successfully";
-            header("Location: list_screen.php");
+            header("Location: list-screen.php");
             exit();
         } else {
             $error = "Error: " . mysqli_error($conn);
@@ -118,15 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="col-12 col-xl-7">
                             <div class="row">
                                
-                                <div class="col-12">
-                                    <div class="sign__group">
-                                        <label for="theaterId" class="form-label text-light">THEATER<span class="text-danger">*<?php echo $theaterIdErr ?></span></label>
-                                        <select name="theaterId" class="sign__input" required>
-                                            <option value="">Select Theater</option>
-                                            <?php echo $theaterOptions; ?>
-                                        </select>
-                                    </div>
-                                </div>
+                               
 
                                 
                                 <div class="col-12">

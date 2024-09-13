@@ -81,7 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         `screen_id`='$screen',
         `movie_id`='$movies',
         `show_time_id` = '$show_time',
-        `show_date` = '$show_date'
+        `show_date` = '$show_date',
+        `theater_id`='$theater',
            WHERE `shows`.`show_id` = 3;";
         if (mysqli_query($conn, $sql_show_update)) {
             header("Location: show-admin.php");

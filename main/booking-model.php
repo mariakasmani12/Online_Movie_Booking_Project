@@ -4,7 +4,7 @@ ob_start();
 include("header.php");
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: index2.php");
+    header("Location: ../login.php");
     exit();
 }
 
@@ -20,10 +20,13 @@ if (mysqli_num_rows($user_check_result) == 0) {
 }
 
 // Fetching data from database
+// $sq_screen="SELECT total_seats_avaible  FROM `screens`
+// WHERE screen_name='$screen'";
+
 $sql_show = "SELECT * FROM `shows`";
 $shows = mysqli_query($conn, $sql_show);
 
-$sql_screen = "SELECT * FROM `screen`";
+$sql_screen = "SELECT * FROM `screen` ";
 $screens = mysqli_query($conn, $sql_screen);
 
 $sql_theater = "SELECT * FROM `theater`";
@@ -46,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['book'])) {
 
     $sql_show_details = "SELECT * FROM `shows` AS sh 
     JOIN screen AS s ON sh.screen_id = s.screen_id
-    JOIN theater AS th ON s.theater_id = th.theater_id
+    JOIN theater AS th ON sh.theater_id = th.theater_id
     JOIN show_timing AS st ON st.show_time_id = sh.show_time_id
     JOIN movies AS m ON sh.movie_id = m.movie_id
     WHERE `show_id` = $showid";
@@ -66,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['book'])) {
     }
 }
 
-// Handle POST request when form is submitted
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $showid = test_input($_POST["show_id"]);
 
@@ -114,25 +116,51 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
     if (empty($_POST["total_amount"])) {
-        $total_amount = 0; // Default to 0 if not provided
+        $total_amount = 0; 
     } else {
         $total_amount = test_input($_POST["total_amount"]);
     }
 
-    // Insert booking into the database if there are no validation errors
-    if (empty($totalseatErr) && empty($classErr)) {
-        $sql_insert_booking = "INSERT INTO `bookings` 
-        (`b_id`, `show_id`, `seat_class_id`, `user_id`, `total_seats`, `total_amount`) 
-        VALUES (NULL, '$showid', '$class', '$user_id', '$totalseat', '$total_amount')";
+    // Fetch the total seats available for the selected screen
+    $sql_fetch_seats = "SELECT total_seats_available FROM screen WHERE screen_id = 
+        (SELECT screen_id FROM shows WHERE show_id = $showid)";
+    $seat_result = mysqli_query($conn, $sql_fetch_seats);
+    $screen_data = mysqli_fetch_assoc($seat_result);
+    $total_seats_available = $screen_data['total_seats_available'];
 
-        if (mysqli_query($conn, $sql_insert_booking)) {
-            header("Location: index2.php");
-            exit();
+    // Calculate remaining seats
+    $remaining_seats = $total_seats_available - $totalseat;
+
+    if ($totalseat > $total_seats_available) {
+        
+        $totalseatErr = "You have requested more seats than available. Only " . $total_seats_available . " seats are available.";
+    } else {
+       
+        $new_total_seats_available = $total_seats_available - $totalseat;
+        $sql_update_seats = "UPDATE screen SET total_seats_available = '$new_total_seats_available' 
+                             WHERE screen_id = (SELECT screen_id FROM shows WHERE show_id = $showid)";
+        
+        if (mysqli_query($conn, $sql_update_seats)) {
+           
+            $sql_insert_booking = "INSERT INTO `bookings` 
+            (`b_id`, `show_id`, `seat_class_id`, `user_id`, `total_seats`, `total_amount`) 
+            VALUES (NULL, '$showid', '$class', '$user_id', '$totalseat', '$total_amount')";
+           $bookings=mysqli_query($conn, $sql_insert_booking);
+            if ($bookings) {
+                $booking_id = mysqli_insert_id($conn);
+                
+                // Redirect to payment page with the booking ID
+                header("Location: payment.php?b_id=" . $booking_id);
+                exit();
+            } else {
+                echo "Error inserting booking: " . mysqli_error($conn);
+            }
         } else {
-            echo "Error inserting booking: " . mysqli_error($conn);
+            echo "Error updating available seats: " . mysqli_error($conn);
         }
     }
 }
+
 
 ?>
 
@@ -239,7 +267,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                     <!-- Total Seats Input -->
                                     <div class="col-12 col-xl-6">
                                         <div class="sign__group">
-                                            <label class="sign__label">Total Seats</label>
+                                            <label class="sign__label">Total Seats <span class="text-danger"><?php echo $totalseatErr ?></span></label>
                                             <input type="number" id="seatQuantity" name="total_seats" class="sign__input">
                                         </div>
                                     </div>
@@ -259,7 +287,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <input type="submit" name="submit" value="Submit" class="plan__btn">
+                                        <input type="submit" class="plan__btn"  name="submit"  value="submit">
+                                      
                                     </div>
                                 </div>
                             </form>

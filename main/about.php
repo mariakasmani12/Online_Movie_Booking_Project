@@ -1,157 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+include("header.php");
 
-<!-- Mirrored from hotflix.volkovdesign.com/main/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 20 Aug 2024 08:40:01 GMT -->
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-	<!-- CSS -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/splide.min.css">
-	<link rel="stylesheet" href="css/slimselect.css">
-	<link rel="stylesheet" href="css/plyr.css">
-	<link rel="stylesheet" href="css/photoswipe.css">
-	<link rel="stylesheet" href="css/default-skin.css">
-	<link rel="stylesheet" href="css/main.css">
-
-	<!-- Icon font -->
-	<link rel="stylesheet" href="webfont/tabler-icons.min.css">
-
-	<!-- Favicons -->
-	<link rel="icon" type="image/png" href="icon/favicon-32x32.png" sizes="32x32">
-	<link rel="apple-touch-icon" href="icon/favicon-32x32.png">
-
-	<meta name="description" content="Online Movies, TV Shows & Cinema HTML Template">
-	<meta name="keywords" content="">
-	<meta name="author" content="Dmitry Volkov">
-	<title>HotFlix – Online Movies, TV Shows & Cinema HTML Template</title>
-</head>
-
-<body>
-	<!-- header -->
-	<header class="header">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="header__content">
-						<!-- header logo -->
-						<a href="index.html" class="header__logo">
-							<img src="img/logo.svg" alt="">
-						</a>
-						<!-- end header logo -->
-
-						<!-- header nav -->
-						<ul class="header__nav">
-							<!-- dropdown -->
-							<li class="header__nav-item">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Home <i class="ti ti-chevron-down"></i></a>
-
-								<ul class="dropdown-menu header__dropdown-menu">
-									<li><a href="index.html">Home style 1</a></li>
-									<li><a href="index2.html">Home style 2</a></li>
-									<li><a href="index3.html">Home style 3</a></li>
-								</ul>
-							</li>
-							<!-- end dropdown -->
-
-							<!-- dropdown -->
-							<li class="header__nav-item">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Catalog <i class="ti ti-chevron-down"></i></a>
-
-								<ul class="dropdown-menu header__dropdown-menu">
-									<li><a href="catalog.html">Catalog style 1</a></li>
-									<li><a href="catalog2.html">Catalog style 2</a></li>
-									<li><a href="details.html">Details Movie</a></li>
-									<li><a href="details2.html">Details TV Series</a></li>
-								</ul>
-							</li>
-							<!-- end dropdown -->
-
-							<li class="header__nav-item">
-								<a href="pricing.html" class="header__nav-link">Pricing plan</a>
-							</li>
-
-							<!-- dropdown -->
-							<li class="header__nav-item">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pages <i class="ti ti-chevron-down"></i></a>
-
-								<ul class="dropdown-menu header__dropdown-menu">
-									<li><a href="about.html">About Us</a></li>
-									<li><a href="profile.html">Profile</a></li>
-									<li><a href="actor.html">Actor</a></li>
-									<li><a href="contacts.html">Contacts</a></li>
-									<li><a href="faq.html">Help center</a></li>
-									<li><a href="privacy.html">Privacy policy</a></li>
-									<li><a href="https://hotflix.volkovdesign.com/admin/index.html" target="_blank">Admin pages</a></li>
-								</ul>
-							</li>
-							<!-- end dropdown -->
-
-							<!-- dropdown -->
-							<li class="header__nav-item">
-								<a class="header__nav-link header__nav-link--more" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="ti ti-dots"></i></a>
-
-								<ul class="dropdown-menu header__dropdown-menu">
-									<li><a href="signin.html">Sign in</a></li>
-									<li><a href="signup.html">Sign up</a></li>
-									<li><a href="forgot.html">Forgot password</a></li>
-									<li><a href="404.html">404 Page</a></li>
-								</ul>
-							</li>
-							<!-- end dropdown -->
-						</ul>
-						<!-- end header nav -->
-
-						<!-- header auth -->
-						<div class="header__auth">
-							<form action="#" class="header__search">
-								<input class="header__search-input" type="text" placeholder="Search...">
-								<button class="header__search-button" type="button">
-									<i class="ti ti-search"></i>
-								</button>
-								<button class="header__search-close" type="button">
-									<i class="ti ti-x"></i>
-								</button>
-							</form>
-
-							<button class="header__search-btn" type="button">
-								<i class="ti ti-search"></i>
-							</button>
-
-							<!-- dropdown -->
-							<div class="header__lang">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">EN <i class="ti ti-chevron-down"></i></a>
-
-								<ul class="dropdown-menu header__dropdown-menu">
-									<li><a href="#">English</a></li>
-									<li><a href="#">Spanish</a></li>
-									<li><a href="#">French</a></li>
-								</ul>
-							</div>
-							<!-- end dropdown -->
-
-							<a href="signin.html" class="header__sign-in">
-								<i class="ti ti-login"></i>
-								<span>sign in</span>
-							</a>
-						</div>
-						<!-- end header auth -->
-
-						<!-- header menu btn -->
-						<button class="header__btn" type="button">
-							<span></span>
-							<span></span>
-							<span></span>
-						</button>
-						<!-- end header menu btn -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
-	<!-- end header -->
-
+?>
 	<!-- page title -->
 	<section class="section section--first">
 		<div class="container">
@@ -181,7 +31,7 @@
 			<div class="row">
 				<!-- section title -->
 				<div class="col-12">
-					<h2 class="section__title"><b>HotFlix</b> – Best Place for Movies</h2>
+					<h2 class="section__title"><b>FILMIX</b> – Best Place for Movies</h2>
 					<p class="section__text">Welcome to <b>HotFlix</b> movie site, the ultimate destination for all film enthusiasts. Immerse yourself in a world of captivating stories, stunning visuals, and unforgettable performances. Explore our extensive library of movies, spanning across genres, eras, and cultures.</p>
 					<p class="section__text">Indulge in the joy of cinema with our curated collections, featuring handpicked movies grouped by themes, directors, or actors. Dive into the world of cinematic magic and let yourself be transported to new realms of imagination and emotion.</p>
 				</div>
@@ -442,45 +292,8 @@
 		</div>
 	</section>
 	<!-- end partners -->
+<?php
+include("footer.php");
 
-	<!-- footer -->
-	<footer class="footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="footer__content">
-						<a href="index.html" class="footer__logo">
-							<img src="img/logo.svg" alt="">
-						</a>
 
-						<span class="footer__copyright">© HOTFLIX, 2019—2024 <br> Create by <a href="https://themeforest.net/user/dmitryvolkov/portfolio" target="_blank">Dmitry Volkov</a></span>
-
-						<nav class="footer__nav">
-							<a href="about.html">About Us</a>
-							<a href="contacts.html">Contacts</a>
-							<a href="privacy.html">Privacy policy</a>
-						</nav>
-
-						<button class="footer__back" type="button">
-							<i class="ti ti-arrow-narrow-up"></i>
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!-- end footer -->
-
-	<!-- JS -->
-	<script src="js/bootstrap.bundle.min.js"></script>
-	<script src="js/splide.min.js"></script>
-	<script src="js/slimselect.min.js"></script>
-	<script src="js/smooth-scrollbar.js"></script>
-	<script src="js/plyr.min.js"></script>
-	<script src="js/photoswipe.min.js"></script>
-	<script src="js/photoswipe-ui-default.min.js"></script>
-	<script src="js/main.js"></script>
-</body>
-
-<!-- Mirrored from hotflix.volkovdesign.com/main/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 20 Aug 2024 08:40:01 GMT -->
-</html>
+?>
