@@ -1,116 +1,109 @@
-
-
 <?php 
 ob_start();
 include("header.php");
-if(!($_SESSION['login'] && $_SESSION['role_id'] == 1)) {
-	header("Location:./../login.php");
-	exit();
-  }
 
-
-$sql="SELECT * FROM reviews AS r
-JOIN user AS u ON r.user_id=u.user_id
-JOIN movies AS m ON r.movie_id=m.movie_id";
-
-$reviews=mysqli_query($conn,$sql);
-
-$user_id=$movie_id=$rating=$comments="";
-$ratingErr=$commentsErr="";
-
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];  
-} else {
-    header("Location: index2.php");
+// Check if the user is logged in, else redirect to login
+if (!isset($_SESSION['login'])) {
+    header("Location: ./../login.php");
     exit();
 }
 
+// Initialize variables
 $movie_id = "";
 $title = "";
 $director = "";
 $youtube_url = "";
 $movie = "";
 
-if ($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['id'])) {
+// Check if 'id' is in the URL query
+if (isset($_GET['id']) && !empty($_GET['id'])) {
     $movie_id = mysqli_real_escape_string($conn, $_GET['id']);
+
+    // Fetch movie details using the 'id'
     $sql_time = "SELECT * FROM movies WHERE movie_id = '$movie_id'";
     $movies_result = mysqli_query($conn, $sql_time);
 
-    if ($movies_result && $movie = mysqli_fetch_assoc($movies_result)) {
+    // Check if movie exists
+    if ($movies_result && mysqli_num_rows($movies_result) > 0) {
+        $movie = mysqli_fetch_assoc($movies_result);
         $title = $movie['title'];
         $director = $movie['director'];
         $youtube_url = $movie['trailer_url'];
     } else {
-        echo "Error fetching movie details: " . mysqli_error($conn);
+        echo "Movie not found.";
+        exit();
     }
+} else {
+    echo "Invalid Request. Movie ID is missing.";
+    exit();
 }
 
+// Fetch show dates
+$sql_show_dates = "SELECT DISTINCT show_date FROM shows WHERE movie_id = '$movie_id'";
+$show_dates = mysqli_query($conn, $sql_show_dates);
+
+$ratingErr=$commentsErr="";
+// Handle review submission
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
-    $movie_id = mysqli_real_escape_string($conn, $_POST['movie_id']);
+    $user_id = $_SESSION['user_id'];
+    // Validate rating
     if (empty($_POST["rating"])) {
         $ratingErr = "Rating is required";
     } else {
         $rating = mysqli_real_escape_string($conn, $_POST['rating']);
     }
 
+    // Validate comments
     if (empty($_POST["comments"])) {
-        $commentsErr = "Comments are required";
+        $commentsErr = "Comment is required";
     } else {
         $comments = mysqli_real_escape_string($conn, $_POST['comments']);
     }
+  
+    $movie_id = mysqli_real_escape_string($conn, $_POST['movie_id']);
+    if( empty($ratingErr) && empty($commentsErr)){
+    $sql_reviews_insert = "INSERT INTO reviews (review_id, user_id, movie_id, rating, comments, review_date)
+     VALUES (NULL, '$user_id', '$movie_id', '$rating', '$comments', current_timestamp())";
 
-    if (empty($ratingErr) && empty($commentsErr)) {
-        $sql_reviews_insert = "INSERT INTO reviews (review_id, user_id, movie_id, rating, comments, review_date)
-         VALUES (NULL, '$user_id', '$movie_id', '$rating', '$comments', current_timestamp());";
-        if (mysqli_query($conn, $sql_reviews_insert)) {
-            header("Location: details.php?id=$movie_id"); 
-            exit();
-        } else {
-            echo "Error inserting review: " . mysqli_error($conn);
-        }
+    if (mysqli_query($conn, $sql_reviews_insert)) {
+        header("Location: details.php?id=$movie_id"); 
+        exit();
+    } else {
+        echo "Error inserting review: " . mysqli_error($conn);
     }
 }
+}
 
-$sql_theater = "SELECT * FROM theater";
-$theaters = mysqli_query($conn, $sql_theater);
-
-$sql_m = "SELECT * FROM movies";
-$mo = mysqli_query($conn, $sql_m);
-
+// Handle show time selection
 $show_availability_displayed = false;
-$movie_id = mysqli_real_escape_string($conn, $_GET['id']);
-
-if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['save']))
- {
-    $theater = mysqli_real_escape_string($conn, $_POST['theater']);
-    $movie_id = mysqli_real_escape_string($conn, $_POST['movie_id']);
-
-    
-    $sql_time = "SELECT * FROM movies WHERE movie_id = '$movie_id'";
-    $movies_result = mysqli_query($conn, $sql_time);
-
-    if ($movies_result && $movie = mysqli_fetch_assoc($movies_result)) {
-        $title = $movie['title'];
-        $director = $movie['director'];
-        $youtube_url = $movie['trailer_url'];
-    } else {
-        echo "Error fetching movie details: " . mysqli_error($conn);
-    }
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['check_availability'])) {
+    $show_date = mysqli_real_escape_string($conn, $_POST['show_date']);
+    $show_time = mysqli_real_escape_string($conn, $_POST['show_time']);
 
     $sql_book = "SELECT * FROM shows AS sho 
     JOIN screen AS screen ON sho.screen_id = screen.screen_id
     JOIN theater AS th ON sho.theater_id = th.theater_id
     JOIN show_timing AS st ON sho.show_time_id = st.show_time_id
     JOIN movies AS m ON sho.movie_id = m.movie_id 
-    WHERE th.theater_id = '$theater' AND sho.movie_id = '$movie_id'";
+    WHERE sho.movie_id = '$movie_id' AND sho.show_date = '$show_date' AND st.show_time_id = '$show_time'";
 
-    if ($th = mysqli_query($conn, $sql_book)) {
+    $th = mysqli_query($conn, $sql_book);
+    if ($th && mysqli_num_rows($th) > 0) {
         $show_availability_displayed = true;
     } else {
-        echo "Error: " . mysqli_error($conn);
+        echo "Error: No shows available.";
     }
 }
+
+// Fetch reviews
+$sql_reviews = "SELECT * FROM reviews AS r
+JOIN user AS u ON r.user_id=u.user_id
+JOIN movies AS m ON r.movie_id=m.movie_id
+WHERE r.movie_id = '$movie_id'";
+$reviews = mysqli_query($conn, $sql_reviews);
+
 ?>
+
 <style>
     .table-warning tbody tr:nth-child(even) {
         background-color: #222028;
@@ -199,43 +192,56 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['save']))
     </div>
     <!-- end details content -->
                 </section>
+     
 <!-- Show Availability Form -->
-<?php if (!$show_availability_displayed) {?>
+<?php if (!$show_availability_displayed) { ?>
     <div class="section section--notitle">
         <div class="container">    
             <div class="row">
-                <!-- plan -->
                 <div class="col-10">
                     <div class="plan">
                         <h3 class="plan__title">Show Availability</h3>
                         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?id=' . $movie_id; ?>" method="post" class="sign__form sign__form--comments">
-                       
-                        <input type="hidden" class="sign__input" name="movie_id" value="<?php echo htmlspecialchars($movie_id); ?>">
-                        <select class="form-select text-light" aria-label="Default select example" name="theater" style="background-color: #222028; border-color: #f9ab00;">
-                                <option value="">Select theater</option>
-                                <?php while ($thet = mysqli_fetch_assoc($theaters)) { ?>
-                                    <option value="<?php echo $thet['theater_id']; ?>"><?php echo $thet['theater_name']; ?></option>
+                            <input type="hidden" name="movie_id" value="<?php echo htmlspecialchars($movie_id); ?>">
+                            
+                            <!-- Select Show Date -->
+                            <select class="form-select text-light" name="show_date" required  style="background-color: #222028; border-color: #f9ab00;">
+                                <option value="">Select show date</option>
+                                <?php while ($date = mysqli_fetch_assoc($show_dates)) { ?>
+                                    <option value="<?php echo $date['show_date']; ?>"><?php echo $date['show_date']; ?></option>
+                                <?php } ?>
+                            </select> 
+
+                            <!-- Select Show Time -->
+                            <select class="form-select text-light" name="show_time" required  style="background-color: #222028; border-color: #f9ab00;">
+                                <option value="">Select show time</option>
+                                <?php
+                                // Fetch available show timings
+                                $sql_show_times = "SELECT * FROM show_timing";
+                                $show_times = mysqli_query($conn, $sql_show_times);
+                                while ($time = mysqli_fetch_assoc($show_times)) { ?>
+                                    <option value="<?php echo $time['show_time_id']; ?>"><?php echo $time['time']; ?></option>
                                 <?php } ?>
                             </select>  
-                            <input type="submit" name="save" value="save" class="plan__btn">
+
+                            <input type="submit" name="check_availability" value="Check Availability" class="plan__btn">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<?php }  ?>
+<?php } ?>
 
 <!-- Show Availability Results -->
 <?php if ($show_availability_displayed) { ?>
     <div class="section section--notitle">
         <div class="container">
             <div class="row">
-                <!-- plan -->
                 <div class="col-10">
                     <div class="plan">
-                        <h3 class="plan__title">Availability</h3>
-                        <table class="table table-striped " style="background-color: #222028; border-color: #f9ab00; color:white;">
+                        <h3 class="plan__title">Available Shows</h3>
+                        <table class="table table-striped" style="background-color: #222028; border-color: #f9ab00; color:white;">
                             <thead>
                                 <tr>
                                     <th>Theater</th>
@@ -246,20 +252,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['save']))
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody >
-                                <?php while ($theater_info = mysqli_fetch_assoc($th)) { ?>
-                                    <tr>
-                                        <td  style="color:white;"><?php echo htmlspecialchars($theater_info['theater_name']); ?></td>
-                                        <td  style="color:white;"><?php echo htmlspecialchars($theater_info['title']); ?></td>
-                                        <td  style="color:white;"><?php echo htmlspecialchars($theater_info['screen_name']); ?></td>
-                                        <td  style="color:white;"><?php echo htmlspecialchars($theater_info['time']); ?> - <?php echo htmlspecialchars($theater_info['time_name']); ?></td>
-                                        <td  style="color:white;"><?php echo htmlspecialchars($theater_info['show_date']); ?></td>
+                            <tbody>
+                                <?php while ($show = mysqli_fetch_assoc($th)) { ?>
+                                    <tr style="background-color: #222028; border-color: #f9ab00; color:white;">
+                                        <td class="text-light"><?php echo htmlspecialchars($show['theater_name']); ?></td>
+                                        <td class="text-light"><?php echo htmlspecialchars($show['title']); ?></td>
+                                        <td class="text-light"><?php echo htmlspecialchars($show['screen_name']); ?></td>
+                                        <td class="text-light"><?php echo htmlspecialchars($show['time']); ?></td>
+                                        <td class="text-light"><?php echo htmlspecialchars($show['show_date']); ?></td>
                                         <td>
-                                         <a  href="booking-model.php?book=<?php  echo htmlspecialchars($theater_info['show_id']); ?>"type="button" class="catalog__btn catalog__btn--view"  style="background-color: #f9ab00; border: 2px solid #f9ab00; magrin:4px; padding:4px;  color:white;">
-                                          Book Now
-                                </a>
+                                            <a class="bg-warning text-light" href="booking-model.php?book=<?php echo htmlspecialchars($show['show_id']); ?>" class="catalog__btn">Book Now</a>
                                         </td>
-                                      
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -270,10 +273,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['save']))
         </div>
     </div>
 <?php } ?>
-
-<!-- end details -->
- 
-
 <!-- content -->
 <section class="content">
     <div class="content__head content__head--mt">

@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 // Passwords match, continue
                 $_SESSION["login"] = true;
                 $_SESSION["user_id"] = $login['user_id'];
+				$_SESSION["age"] = $login['age'];
                 $_SESSION["username"] = $login['username'];
                 $_SESSION["name"] = $login['name'];
                 $_SESSION["role_id"] = $login['role_id'];

@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id']; 
-
+$age=$_SESSION['age'];
 
 $sql_check_user = "SELECT * FROM `user` WHERE `user_id` = '$user_id'";
 $user_check_result = mysqli_query($conn, $sql_check_user);
@@ -281,7 +281,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                     </div>
 									<div class="col-12 col-xl-6">
                                         <div class="sign__group">
-                                            
+                                            <?php if($age > 3 && $age < 12){  ?>
+                                        <h4 class="text-warning" id="amount" > hurray! you  got  
+                                            Kids discount 25% off</h4>
+                                          <?php }?>
                                             <input type="text" id="totalAmount" name="total_amount" class="sign__input" style=" margin-right:62px;  margin-top:12px;"readonly>
                                             <input type="hidden" id="totalAmountHidden" name="total_amount">
                                         </div>
@@ -311,6 +314,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var seatQuantityInput = document.getElementById('seatQuantity');
     var totalAmountInput = document.getElementById('totalAmount');
     var totalAmountHiddenInput = document.getElementById('totalAmountHidden');
+    var userAge = <?php echo json_encode($age); ?>;
 
     function calculateTotal() {
         var seatClass = seatClassSelect.options[seatClassSelect.selectedIndex];
@@ -319,8 +323,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (pricePerSeat && seatQuantity) {
             var totalAmount = pricePerSeat * seatQuantity;
+
+            if (userAge > 3 && userAge < 12) {
+                totalAmount *= 0.75; // Apply 25% of the original amount
+                document.getElementById('amount')
+            }
+
             totalAmountInput.value = totalAmount.toFixed(2);
             totalAmountHiddenInput.value = totalAmount.toFixed(2);
+
         } else {
             totalAmountInput.value = '';
             totalAmountHiddenInput.value = '';

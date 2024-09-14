@@ -8,7 +8,7 @@ $sql_join="SELECT * FROM `bookings` AS b
 JOIN `shows` AS sh ON b.show_id = sh.show_id
 JOIN `show_timing`AS st ON sh.show_time_id=st.show_time_id
 JOIN `screen` AS sc ON sh.screen_id=sc.screen_id
-JOIN `theater`AS th ON sc.theater_id=th.theater_id
+JOIN `theater`AS th ON sh.theater_id=th.theater_id
 JOIN `movies` AS m ON sh.movie_id=m.movie_id
 JOIN `seat_class`AS class ON b.seat_class_id=class.seat_id
 JOIN `user`AS u ON b.user_id=u.user_id  WHERE b.user_id='$user_id'";

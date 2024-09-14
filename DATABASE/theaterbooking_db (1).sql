@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2024 at 06:40 PM
+-- Generation Time: Sep 14, 2024 at 07:53 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -41,10 +41,33 @@ CREATE TABLE `bookings` (
 --
 
 INSERT INTO `bookings` (`b_id`, `show_id`, `seat_class_id`, `user_id`, `total_seats`, `total_amount`) VALUES
-(13, 1, 4, 2, 4, '39'),
-(15, 3, 2, 5, 3, '39'),
-(16, 3, 2, 2, 3, '39'),
-(17, 1, 2, 2, 3, '39');
+(13, 1, NULL, 2, 4, '39'),
+(15, 3, NULL, 5, 3, '39'),
+(16, 3, NULL, 2, 3, '39'),
+(17, 1, NULL, 2, 3, '39'),
+(18, 3, NULL, NULL, 4, '39'),
+(20, 7, NULL, NULL, 1, '39'),
+(21, 7, NULL, NULL, 3, '39'),
+(32, 3, NULL, 2, 5, '39'),
+(33, 3, NULL, 2, 5, '39'),
+(39, 6, NULL, NULL, 4, '39'),
+(43, 6, NULL, NULL, 3, '39'),
+(44, 6, NULL, NULL, 3, '39'),
+(45, 6, NULL, NULL, 4, '39'),
+(46, 6, NULL, NULL, 4, '39'),
+(47, 6, NULL, NULL, 4, '39'),
+(52, 6, NULL, NULL, 5, '65'),
+(53, 6, NULL, NULL, 5, '45'),
+(54, 6, NULL, NULL, 3, '27'),
+(55, 6, NULL, NULL, 5, '45'),
+(56, 6, NULL, NULL, 6, '54'),
+(57, 6, NULL, NULL, 4, '36'),
+(58, 7, NULL, NULL, 7, '91'),
+(59, 8, NULL, 17, 2, '26'),
+(60, 9, 14, 17, 5, '3000'),
+(61, 10, 14, 17, 6, '3600'),
+(62, 9, 14, 17, 5, '3000'),
+(63, 9, 14, 18, 3, '1350');
 
 -- --------------------------------------------------------
 
@@ -83,12 +106,17 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`username`, `password`, `status`, `user_id`) VALUES
-('cvb', 'zxcvb', 1, 13),
-('fat12', 'fati', 1, 9),
+('cvb', 'zxcvb', 1, NULL),
+('fat12', 'fati', 1, NULL),
 ('maanan12', 'sdfghjkl', 1, NULL),
+('madiha12', 'madiha12', 1, 16),
+('mannu', 'maria12', 1, 18),
 ('mari123', '123456789k', 1, NULL),
-('maria12', 'maria', 1, 8),
-('nimo12', 'hiii', 1, NULL);
+('maria', 'maria', 1, 17),
+('maria12', 'maria', 1, NULL),
+('nimo12', 'hiii', 1, NULL),
+('sarah12', 'sarah123', 1, 15),
+('zainu12', 'fghjkl;', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -113,12 +141,7 @@ CREATE TABLE `movies` (
 --
 
 INSERT INTO `movies` (`movie_id`, `title`, `cast`, `director`, `duration`, `released_date`, `trailer_url`, `synopsis`, `image`) VALUES
-(11, 'pk', 'Aamir Khan as PK (the alien protagonist)\r\nAnushka Sharma as Jagat Janani (also known as Jaggu), a journalist\r\nSushant Singh Rajput as Sarfaraz Yousuf (Jaggu’s love interest)\r\nBoman Irani as Cherry\r\nSaurabh Shukla as Bhairon Singh\r\nReema Lagoo as Jaggu&#039;s mother\r\nSanjay Dutt in a cameo role', 'Rajkumar Hirani', '00:01:53', '2014-12-01', 'https://www.youtube.com/embed/uKt3mdu3Y2s?si=bJmN2qBjMKxz3qsF', 'fghjk ', '../images/image (2).png'),
-(12, 'test', 'rtett', 'efghjkl', '00:01:40', '2011-11-11', 'vbnm,rtyu', 'dfghjklmnbvcxssdftyui ', '../images/lipstick banner1.jpg'),
-(13, 'sdfgh', 'asdfgh', 'asdf', '00:01:34', '2025-11-11', 'vbnm', 'bnm, ', '../images/lipstick banner1.jpg'),
-(14, 'test', 'dfghjkl', 'xcvbnm,', '00:01:54', '2222-01-01', 'sdfghjkl', 'dfghjkl ', '../images/coding image 1.jpg'),
-(15, 'dfghjk', 'sdfgh', 'sdfghj', '00:03:45', '5555-05-05', 'xdfghjkl', 'dfghjkl ', '../images/blush (1).docx'),
-(16, 'ghjkl', 'sdfghjk', 'dfghjk', '00:00:00', '2025-01-01', 'dfghjk', 'dxcvbnm ', '../images/coding image 2.jpg');
+(17, 'chenai express', 'Shah Rukh Khan \r\nDeepika Padukone \r\nSathyaraj \r\nNikitin Dheer \r\nMukesh Tiwari', 'Rohit Shetty.', '00:01:41', '2013-08-09', 'https://www.youtube.com/embed/rARol7Dk2zo?si=3UYDD2kGMdcJBQ3O&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin', 'Chennai Express is an action-comedy film that follows the story of Rahul Mithaiwala (played by Shah Rukh Khan), a 40-year-old man who embarks on a journey to fulfill his late grandfather&#039;s wish of immersing his ashes in Rameswaram. However, his life takes an unexpected turn when he boards the Chennai Express train and meets Meenamma (Deepika Padukone), the daughter of a powerful South Indian don.\r\n\r\nAs Rahul inadvertently gets entangled in Meenamma&#039;s world, he finds himself on the run from her father&#039;s henchmen and her suitor, Tangaballi. Along the way, they face comical and dangerous situations while traveling through the South Indian landscape. Despite their differences, Rahul and Meenamma grow closer, and Rahul must eventually face her father to win her hand.\r\n\r\nThe film blends humor, action, and romance with colorful visuals, and features a mixture of North and South Indian cultures. ', '../images/chenai express.jfif');
 
 -- --------------------------------------------------------
 
@@ -132,9 +155,23 @@ CREATE TABLE `payment` (
   `card_number` int(255) NOT NULL,
   `cvv` int(3) NOT NULL,
   `card_expiry` date NOT NULL,
-  `total.amount` int(255) NOT NULL,
-  `booking_id` int(11) DEFAULT NULL
+  `b_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`payment_id`, `cardholder_name`, `card_number`, `cvv`, `card_expiry`, `b_id`) VALUES
+(1, 'maria', 987654327, 123, '2024-09-03', 56),
+(2, 'mhhbnm,', 65432166, 123, '2024-11-11', 57),
+(3, 'lkjhgf', 9876543, 122, '2025-03-22', 57),
+(4, 'saimnaa', 9531234, 122, '2000-02-22', 57),
+(5, 'oiuytrewqqwertyui', 2147483647, 344, '8888-08-08', 58),
+(6, 'kjhgfdsasdfghjk', 9876543, 123, '0300-01-01', 59),
+(7, 'maria', 1234567890, 123, '2024-10-05', 60),
+(8, 'jhgfdsdfgh', 2147483647, 123, '9999-09-09', 61),
+(9, 'lkjgfdfghjkhfgh', 2147483647, 123, '2025-09-09', 62);
 
 -- --------------------------------------------------------
 
@@ -156,12 +193,13 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`review_id`, `user_id`, `movie_id`, `rating`, `comments`, `review_date`) VALUES
-(26, 9, 11, 4, 'dfghjkl;\'', '2024-09-06 09:34:17'),
-(33, 9, 11, 5, 'dfghjkl', '2024-09-06 10:23:35'),
-(34, 9, 11, 5, 'asdfghjkl', '2024-09-06 10:23:45'),
-(35, 9, 11, 5, 'test', '2024-09-06 17:59:12'),
-(36, 9, 11, 4, 'kjhgfd', '2024-09-09 07:43:31'),
-(37, 9, 11, 5, 'best movie have ever seen beforre', '2024-09-09 09:12:27');
+(26, NULL, NULL, 4, 'dfghjkl;\'', '2024-09-06 09:34:17'),
+(33, NULL, NULL, 5, 'dfghjkl', '2024-09-06 10:23:35'),
+(34, NULL, NULL, 5, 'asdfghjkl', '2024-09-06 10:23:45'),
+(35, NULL, NULL, 5, 'test', '2024-09-06 17:59:12'),
+(36, NULL, NULL, 4, 'kjhgfd', '2024-09-09 07:43:31'),
+(37, NULL, NULL, 5, 'best movie have ever seen beforre', '2024-09-09 09:12:27'),
+(38, 16, 17, 6, 'kjhgfds', '2024-09-14 13:50:04');
 
 -- --------------------------------------------------------
 
@@ -190,17 +228,18 @@ INSERT INTO `role` (`role_id`, `role`) VALUES
 
 CREATE TABLE `screen` (
   `screen_id` int(11) NOT NULL,
-  `theater_id` int(11) DEFAULT NULL,
   `screen_name` varchar(255) NOT NULL,
-  `total seats` int(255) NOT NULL
+  `total_seats_available` int(255) NOT NULL,
+  `seat_class_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `screen`
 --
 
-INSERT INTO `screen` (`screen_id`, `theater_id`, `screen_name`, `total seats`) VALUES
-(2, 3, 'screen-1', 50);
+INSERT INTO `screen` (`screen_id`, `screen_name`, `total_seats_available`, `seat_class_id`) VALUES
+(3, 'IMAX Screen', 52, NULL),
+(6, '4DX Screen', 27, NULL);
 
 -- --------------------------------------------------------
 
@@ -220,8 +259,7 @@ CREATE TABLE `seat_class` (
 --
 
 INSERT INTO `seat_class` (`seat_id`, `screen_id`, `class_type`, `price`) VALUES
-(2, 2, 'boxs', '9'),
-(4, 2, 'gold', '13');
+(14, NULL, 'gold', '600');
 
 -- --------------------------------------------------------
 
@@ -234,18 +272,22 @@ CREATE TABLE `shows` (
   `screen_id` int(11) DEFAULT NULL,
   `movie_id` int(11) DEFAULT NULL,
   `show_time_id` int(11) DEFAULT NULL,
-  `show_date` date NOT NULL
+  `show_date` date NOT NULL,
+  `theater_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `shows`
 --
 
-INSERT INTO `shows` (`show_id`, `screen_id`, `movie_id`, `show_time_id`, `show_date`) VALUES
-(1, NULL, NULL, NULL, '2024-09-01'),
-(3, 2, NULL, 3, '2024-08-30'),
-(6, 2, 11, 4, '2024-09-09'),
-(7, 2, 12, 3, '2024-09-07');
+INSERT INTO `shows` (`show_id`, `screen_id`, `movie_id`, `show_time_id`, `show_date`, `theater_id`) VALUES
+(1, NULL, NULL, NULL, '2024-09-01', NULL),
+(3, NULL, NULL, 3, '2024-08-30', NULL),
+(6, NULL, NULL, 4, '2024-09-09', NULL),
+(7, NULL, NULL, 3, '2024-09-07', NULL),
+(8, 3, 17, 3, '2024-09-14', NULL),
+(9, 6, 17, 4, '2024-08-30', 9),
+(10, 3, 17, 4, '0001-01-01', 8);
 
 -- --------------------------------------------------------
 
@@ -285,7 +327,8 @@ CREATE TABLE `theater` (
 --
 
 INSERT INTO `theater` (`theater_id`, `theater_name`, `location`) VALUES
-(3, 'Karachi Cinema', 'Tariq Road Karachi');
+(8, 'The Arena Cinema', 'Bahria Town Tower, Tariq Rd'),
+(9, 'Nueplex Cinemas', 'Nueplex Cinemas Askari IV, Main Rashid Minhas Rd,');
 
 -- --------------------------------------------------------
 
@@ -309,9 +352,10 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`user_id`, `name`, `email`, `age`, `role_id`, `gender_id`) VALUES
 (2, 'test', 'test@gamil.com', 20, 3, 2),
 (5, 'nimraa', 'nimra122@gamil.com', 22, 1, 1),
-(8, 'maria kasmani', 'mariakamni27@gamil.com', 12, 1, 2),
-(9, 'fatima', 'fatima12@gmail.com', 23, 3, 2),
-(13, 'Maria kasmani', 'mariakasmani27@gmail.com', 34, 3, 2);
+(15, 'sarah', 'sarahshaz12@gmail.com', 23, 3, 2),
+(16, 'madiha', 'madihaimam12@gamil.com', 34, 3, 2),
+(17, 'Maria kasmani', 'mariakasmani27@gmail.com', 19, 1, 2),
+(18, 'mannan Awan', 'mannanawan12@gmail.com', 7, 3, 1);
 
 --
 -- Indexes for dumped tables
@@ -349,7 +393,8 @@ ALTER TABLE `movies`
 -- Indexes for table `payment`
 --
 ALTER TABLE `payment`
-  ADD PRIMARY KEY (`payment_id`);
+  ADD PRIMARY KEY (`payment_id`),
+  ADD KEY `booking_id` (`b_id`);
 
 --
 -- Indexes for table `reviews`
@@ -370,7 +415,7 @@ ALTER TABLE `role`
 --
 ALTER TABLE `screen`
   ADD PRIMARY KEY (`screen_id`),
-  ADD KEY `theater_id` (`theater_id`);
+  ADD KEY `screen_ibfk_1` (`seat_class_id`);
 
 --
 -- Indexes for table `seat_class`
@@ -386,7 +431,8 @@ ALTER TABLE `shows`
   ADD PRIMARY KEY (`show_id`),
   ADD KEY `movie_id` (`movie_id`),
   ADD KEY `screen_id` (`screen_id`),
-  ADD KEY `show_time_id` (`show_time_id`);
+  ADD KEY `show_time_id` (`show_time_id`),
+  ADD KEY `theater_id` (`theater_id`);
 
 --
 -- Indexes for table `show_timing`
@@ -416,7 +462,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `b_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `b_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `gender`
@@ -428,19 +474,19 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT for table `movies`
 --
 ALTER TABLE `movies`
-  MODIFY `movie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `movie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -452,19 +498,19 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `screen`
 --
 ALTER TABLE `screen`
-  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `seat_class`
 --
 ALTER TABLE `seat_class`
-  MODIFY `seat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `seat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `shows`
 --
 ALTER TABLE `shows`
-  MODIFY `show_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `show_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `show_timing`
@@ -476,13 +522,13 @@ ALTER TABLE `show_timing`
 -- AUTO_INCREMENT for table `theater`
 --
 ALTER TABLE `theater`
-  MODIFY `theater_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `theater_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
@@ -503,6 +549,12 @@ ALTER TABLE `login`
   ADD CONSTRAINT `login_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
+-- Constraints for table `payment`
+--
+ALTER TABLE `payment`
+  ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`b_id`) REFERENCES `bookings` (`b_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
 -- Constraints for table `reviews`
 --
 ALTER TABLE `reviews`
@@ -513,7 +565,7 @@ ALTER TABLE `reviews`
 -- Constraints for table `screen`
 --
 ALTER TABLE `screen`
-  ADD CONSTRAINT `screen_ibfk_1` FOREIGN KEY (`theater_id`) REFERENCES `theater` (`theater_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `screen_ibfk_1` FOREIGN KEY (`seat_class_id`) REFERENCES `seat_class` (`seat_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `seat_class`
@@ -527,7 +579,8 @@ ALTER TABLE `seat_class`
 ALTER TABLE `shows`
   ADD CONSTRAINT `shows_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`movie_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `shows_ibfk_2` FOREIGN KEY (`screen_id`) REFERENCES `screen` (`screen_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `shows_ibfk_3` FOREIGN KEY (`show_time_id`) REFERENCES `show_timing` (`show_time_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `shows_ibfk_3` FOREIGN KEY (`show_time_id`) REFERENCES `show_timing` (`show_time_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `shows_ibfk_4` FOREIGN KEY (`theater_id`) REFERENCES `theater` (`theater_id`);
 
 --
 -- Constraints for table `user`

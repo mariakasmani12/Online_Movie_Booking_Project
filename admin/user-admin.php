@@ -54,6 +54,7 @@ $shows=mysqli_query($conn,$sql);
 									<th>Email</th>
 									<th>username</th>
 									<th>Gender</th>
+									<th>age</th>
 									<th>Role</th>
 									<th>Status</th>
 								</tr>
@@ -87,6 +88,11 @@ $shows=mysqli_query($conn,$sql);
 									<td>
 										<div class="catalog__text">
 										<?php echo $show['gender']?>
+										</div>
+									</td>
+									<td>
+										<div class="catalog__text">
+										<?php echo $show['age']?>
 										</div>
 									</td>
 									<td>
