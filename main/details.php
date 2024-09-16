@@ -154,9 +154,7 @@ $reviews = mysqli_query($conn, $sql_reviews);
                                         <li><span>Director:</span> <a href="actor.html"><?php echo htmlspecialchars($director); ?></a></li>
                                         <li><span>Cast:</span> <a href="actor.html"> <?php echo htmlspecialchars($movie['cast']); ?></a>
                                         </li>
-                                        <li><span>Genre:</span> <a href="catalog.html">Action</a> 
-                                            <a href="catalog.html">Thriller</a>
-                                        </li>
+                                       
                                         <li><span>Premiere:</span><?php echo htmlspecialchars($movie['released_date']); ?></li>
                                         <li><span>Running time:</span><?php echo htmlspecialchars($movie['duration']); ?></li>
                                       
@@ -205,6 +203,7 @@ $reviews = mysqli_query($conn, $sql_reviews);
                             <input type="hidden" name="movie_id" value="<?php echo htmlspecialchars($movie_id); ?>">
                             
                             <!-- Select Show Date -->
+                            <label for="movie_id" class="form-label text-light"> show date <span class="text-danger"></label>
                             <select class="form-select text-light" name="show_date" required  style="background-color: #222028; border-color: #f9ab00;">
                                 <option value="">Select show date</option>
                                 <?php while ($date = mysqli_fetch_assoc($show_dates)) { ?>
@@ -213,6 +212,7 @@ $reviews = mysqli_query($conn, $sql_reviews);
                             </select> 
 
                             <!-- Select Show Time -->
+                            <label for="movie_id" class="form-label text-light"> show time <span class="text-danger"></label>
                             <select class="form-select text-light" name="show_time" required  style="background-color: #222028; border-color: #f9ab00;">
                                 <option value="">Select show time</option>
                                 <?php

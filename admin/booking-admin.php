@@ -103,9 +103,16 @@ $bookings=mysqli_query($conn,$sql_join);
 									<td>
 										<div class="catalog__text"><?php echo $booking['time']?> <br> <?php echo$booking['time_name'];?></div>
 									</td>
-									<td>
+									<?php  if($booking['status']==1){         ?>
+									<td>  
 										<div class="catalog__text catalog__text--green">Approved</div>
 									</td>
+									<?php } else{  ?>
+
+										<td>  
+										<div class="catalog__text catalog__text--danger">Approved</div>
+									</td>
+										<?php }?>
 									<td>
 										<div class="catalog__btns">
 											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--banned" data-bs-target="#modal-status">

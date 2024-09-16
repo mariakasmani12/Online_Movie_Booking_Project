@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 14, 2024 at 07:53 PM
+-- Generation Time: Sep 16, 2024 at 03:19 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -33,41 +33,45 @@ CREATE TABLE `bookings` (
   `seat_class_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `total_seats` int(255) NOT NULL,
-  `total_amount` decimal(10,0) NOT NULL
+  `total_amount` decimal(10,0) NOT NULL,
+  `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `bookings`
 --
 
-INSERT INTO `bookings` (`b_id`, `show_id`, `seat_class_id`, `user_id`, `total_seats`, `total_amount`) VALUES
-(13, 1, NULL, 2, 4, '39'),
-(15, 3, NULL, 5, 3, '39'),
-(16, 3, NULL, 2, 3, '39'),
-(17, 1, NULL, 2, 3, '39'),
-(18, 3, NULL, NULL, 4, '39'),
-(20, 7, NULL, NULL, 1, '39'),
-(21, 7, NULL, NULL, 3, '39'),
-(32, 3, NULL, 2, 5, '39'),
-(33, 3, NULL, 2, 5, '39'),
-(39, 6, NULL, NULL, 4, '39'),
-(43, 6, NULL, NULL, 3, '39'),
-(44, 6, NULL, NULL, 3, '39'),
-(45, 6, NULL, NULL, 4, '39'),
-(46, 6, NULL, NULL, 4, '39'),
-(47, 6, NULL, NULL, 4, '39'),
-(52, 6, NULL, NULL, 5, '65'),
-(53, 6, NULL, NULL, 5, '45'),
-(54, 6, NULL, NULL, 3, '27'),
-(55, 6, NULL, NULL, 5, '45'),
-(56, 6, NULL, NULL, 6, '54'),
-(57, 6, NULL, NULL, 4, '36'),
-(58, 7, NULL, NULL, 7, '91'),
-(59, 8, NULL, 17, 2, '26'),
-(60, 9, 14, 17, 5, '3000'),
-(61, 10, 14, 17, 6, '3600'),
-(62, 9, 14, 17, 5, '3000'),
-(63, 9, 14, 18, 3, '1350');
+INSERT INTO `bookings` (`b_id`, `show_id`, `seat_class_id`, `user_id`, `total_seats`, `total_amount`, `status`) VALUES
+(13, 1, NULL, 2, 4, '39', 0),
+(15, 3, NULL, 5, 3, '39', 0),
+(16, 3, NULL, 2, 3, '39', 0),
+(17, 1, NULL, 2, 3, '39', 0),
+(18, 3, NULL, NULL, 4, '39', 0),
+(20, 7, NULL, NULL, 1, '39', 0),
+(21, 7, NULL, NULL, 3, '39', 0),
+(32, 3, NULL, 2, 5, '39', 0),
+(33, 3, NULL, 2, 5, '39', 0),
+(39, 6, NULL, NULL, 4, '39', 0),
+(43, 6, NULL, NULL, 3, '39', 0),
+(44, 6, NULL, NULL, 3, '39', 0),
+(45, 6, NULL, NULL, 4, '39', 0),
+(46, 6, NULL, NULL, 4, '39', 0),
+(47, 6, NULL, NULL, 4, '39', 0),
+(52, 6, NULL, NULL, 5, '65', 0),
+(53, 6, NULL, NULL, 5, '45', 0),
+(54, 6, NULL, NULL, 3, '27', 0),
+(55, 6, NULL, NULL, 5, '45', 0),
+(56, 6, NULL, NULL, 6, '54', 0),
+(57, 6, NULL, NULL, 4, '36', 0),
+(58, 7, NULL, NULL, 7, '91', 0),
+(59, 8, NULL, 17, 2, '26', 0),
+(60, 9, 14, 17, 5, '3000', 0),
+(61, 10, 14, 17, 6, '3600', 0),
+(62, 9, 14, 17, 5, '3000', 0),
+(63, 9, 14, 18, 3, '1350', 0),
+(64, NULL, NULL, NULL, 0, '0', 0),
+(65, 11, 14, 17, 3, '1800', 0),
+(66, 14, 14, 18, 4, '1800', 0);
 
 -- --------------------------------------------------------
 
@@ -141,7 +145,17 @@ CREATE TABLE `movies` (
 --
 
 INSERT INTO `movies` (`movie_id`, `title`, `cast`, `director`, `duration`, `released_date`, `trailer_url`, `synopsis`, `image`) VALUES
-(17, 'chenai express', 'Shah Rukh Khan \r\nDeepika Padukone \r\nSathyaraj \r\nNikitin Dheer \r\nMukesh Tiwari', 'Rohit Shetty.', '00:01:41', '2013-08-09', 'https://www.youtube.com/embed/rARol7Dk2zo?si=3UYDD2kGMdcJBQ3O&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin', 'Chennai Express is an action-comedy film that follows the story of Rahul Mithaiwala (played by Shah Rukh Khan), a 40-year-old man who embarks on a journey to fulfill his late grandfather&#039;s wish of immersing his ashes in Rameswaram. However, his life takes an unexpected turn when he boards the Chennai Express train and meets Meenamma (Deepika Padukone), the daughter of a powerful South Indian don.\r\n\r\nAs Rahul inadvertently gets entangled in Meenamma&#039;s world, he finds himself on the run from her father&#039;s henchmen and her suitor, Tangaballi. Along the way, they face comical and dangerous situations while traveling through the South Indian landscape. Despite their differences, Rahul and Meenamma grow closer, and Rahul must eventually face her father to win her hand.\r\n\r\nThe film blends humor, action, and romance with colorful visuals, and features a mixture of North and South Indian cultures. ', '../images/chenai express.jfif');
+(18, 'SOUL', 'Jamie Foxx\r\nTina Fey \r\nPhylicia Rashad \r\nAngela Bassett a\r\nGraham Norton \r\nRichard Ayoade \r\nRachel House', 'Pete Docter', '00:01:00', '2020-12-25', 'https://www.youtube.com/embed/xOsLIiBStEs?si=wVqQup1MTsGq-tjj&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin', '&quot;Soul&quot; follows the story of Joe Gardner, a middle school band teacher who dreams of becoming a professional jazz musician. Just when Joe gets his big break, an unexpected accident transports his soul to the &quot;Great Before,&quot; a place where new souls are prepared for life on Earth. Here, he meets 22, a soul who has no interest in living on Earth. Together, they embark on a journey to discover what it means to truly live, with Joe striving to return to his body and pursue his passion for music. ', '../images/soul poster.jfif'),
+(19, 'INSIDE OUT', 'Amy Poehler\r\nPhyllis Smith \r\nBill Hader\r\nLewis Black\r\nMindy Kaling \r\nKaitlyn Dias \r\nDiane Lane\r\nKyle MacLachlan', 'Pete Docter', '00:00:00', '2015-06-19', 'https://www.youtube.com/embed/LEjhY15eCx0?si=aRTCo8jIYfP0XY9n&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin', 'inside Out takes place inside the mind of Riley, an 11-year-old girl who is uprooted from her life when her family moves to San Francisco. The story is told from the perspective of Riley&#039;s emotions—Joy, Sadness, Fear, Anger, and Disgust—which live in Headquarters, the control center of Riley&#039;s mind. As Riley struggles with the changes in her life, her emotions battle for control and try to guide her through this difficult transition. Joy tries to keep things positive, but when she and Sadness are accidentally ejected from Headquarters, they must work together to find their way back while Riley&#039;s emotions spiral out of control. ', '../images/insideout poster.jfif'),
+(20, 'COCO', 'Anthony Gonzalez \r\nGael García Bernal \r\nBenjamin Bratt \r\nAlanna Ubach \r\nRenée Victor\r\nEdward James Olmos', 'Lee Unkrich', '00:01:05', '2017-11-17', 'https://www.youtube.com/embed/xlnPHQ3TLX8?si=Ad1iCQu3LQJjKTFy&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin', 'Coco follows the story of Miguel Rivera, a 12-year-old boy who dreams of becoming a musician, despite his family’s long-standing ban on music. On the Día de los Muertos (Day of the Dead), Miguel accidentally finds himself in the Land of the Dead while trying to borrow the guitar of his idol, Ernesto de la Cruz. In the Land of the Dead, Miguel meets his ancestors and befriends a trickster named Héctor. Together, they embark on a journey to discover the truth about Miguel&#039;s family history, the ban on music, and the connection to Ernesto de la Cruz. ', '../images/coco poster.jfif'),
+(21, 'FROZEN', 'Kristen Bell \r\nIdina Menzel \r\nJosh Gad \r\nJonathan Groff \r\nSantino Fontana', 'Chris Buck', '00:01:02', '2013-11-27', 'https://www.youtube.com/embed/FLzfXQSPBOg?si=Oq0Yi7UK1DblLGln&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin', 'Frozen follows the story of Anna, a fearless optimist who sets off on a dangerous journey with Kristoff, an ice harvester, and his loyal reindeer Sven to find her estranged sister, Elsa. Elsa, the newly crowned Queen of Arendelle, has accidentally trapped the kingdom in an eternal winter with her ice powers. Along the way, Anna and Kristoff are joined by a magical snowman named Olaf. Together, they face icy conditions and mysterious forces, while Anna tries to convince Elsa to return and stop the winter.', '../images/frozen poster.jfif'),
+(22, 'ICE AGE', 'Ray Romano\r\nJohn Leguizamo\r\nDenis Leary \r\nGoran Višnjić\r\nJack Black', 'Chris Wedge', '00:00:00', '2020-02-15', 'https://www.youtube.com/embed/Ohq6NmKMja8?si=YCA_scXuKHFpugaJ&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin', 'Ice Age is set during the prehistoric Ice Age, where animals are migrating south to avoid the freezing cold. A woolly mammoth named Manny, a talkative sloth named Sid, and a cunning saber-toothed tiger named Diego team up to return a human baby to its family. Along the way, the unlikely group faces various challenges and dangerous situations. They form a bond as they journey through the harsh, icy environment, with Scrat, the squirrel, constantly chasing his elusive acorn in the background. ', '../images/ice age poster.jfif'),
+(23, 'TOY STORY', 'Tom Hanks \r\nTim Allen \r\nJoan Cusack \r\nNed Beatty \r\nDon Rickles \r\nJim Varney \r\nWallace Shawn\r\nJohn Ratzenberger \r\nKristen Schaal \r\nBonnie Hunt', 'Lee Unkrich', '00:01:03', '2010-06-18', 'https://www.youtube.com/embed/ZZv1vki4ou4?si=RCKVxuvA_xXf_B6D&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin', 'In Toy Story 3, Andy is now 17 years old and preparing to leave for college. As he packs up his belongings, his toys are accidentally donated to a daycare center called Sunnyside. At first, the toys are excited about their new environment, but they soon discover that Sunnyside is not as perfect as it seemed, and they are ruled by the dictatorial Lotso, a stuffed bear who harbors a grudge against the world. ', '../images/toy story.jfif'),
+(24, 'Trolls', 'Anna Kendrick\r\nJustin Timberlake\r\nZooey Deschanel\r\nChristopher Mintz-Plasse \r\nChristine Baranski \r\nRussell Brand\r\nJames Corden \r\nGwendoline Christie', 'Mike Mitchell and Walt Dohrn', '00:01:00', '2024-11-25', '&quot;https://www.youtube.com/embed/4rdMgJJ2exQ?si=KJz5-XE5MuH4bqCR&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin', '&quot;https://www.youtube.com/embed/4rdMgJJ2exQ?si=KJz5-XE5MuH4bqCR&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin ', '../images/trolls poster.jfif'),
+(25, 'HOW TO TRAIN YOUR DRAGAN', 'Jay Baruchel\r\nGerard Butler \r\nAmerica Ferrera \r\nCraig Ferguson \r\nT.J. Miller\r\nKristen Wiig \r\nCodie Smith-McPhee \r\nRobin Atkin Downes', 'Chris Sanders and Dean DeBlois', '01:30:00', '2024-12-17', 'https://www.youtube.com/embed/2BP38770KNo?si=-sluoJTai0wEdIOe&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin', 'How to Train Your Dragon is set in the Viking village of Berk, where young Hiccup Horrendous Haddock III struggles to live up to his father Stoick the Vast’s expectations of being a dragon slayer. When Hiccup captures a dragon, he is surprised to discover that the creature, named Toothless, is not the fierce beast he believed but a gentle, intelligent companion. As Hiccup befriends Toothless, he learns about the true nature of dragons and works to bridge the gap between humans and dragons, ultimately challenging the village&#039;s long-standing traditions of dragon hunting. ', '../images/how to trai you poster.jfif'),
+(26, 'MADAGASCAR', 'Ben Stiller \r\nChris Rock \r\nDavid Schwimmer \r\nJada Pinkett Smith \r\nSacha Baron Cohen \r\nCedric the Entertainer \r\nAndy Richter \r\nTom McGrath \r\nChris Mille', 'Eric Darnell and Tom McGrath', '01:40:00', '2024-12-12', 'https://www.youtube.com/embed/orAqhC-Hp_o?si=7AI6TcBDRmJf9-P5&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin', 'Madagascar follows the story of four animals from the Central Park Zoo in New York City: Alex the Lion, Marty the Zebra, Melman the Giraffe, and Gloria the Hippo. When Marty, yearning for freedom, escapes from the zoo and ends up in the wild, his friends follow him, leading to a series of misadventures. The animals find themselves shipwrecked on the island of Madagascar, where they encounter a group of eccentric lemurs led by King Julien. As they adapt to their new environment, the zoo animals must learn to survive in the wild and find their way back to their comfortable zoo life. ', '../images/magagascar poster.jfif'),
+(27, 'WECK IT RALPH', 'John C. Reilly \r\nSarah Silverman\r\nJack McBrayer .\r\nJane Lynch \r\nAlan Tudyk \r\nMindy Kaling\r\nEd O&#039;Neill \r\nDennis Haysbert', 'Rich Moore', '00:01:01', '2025-01-11', 'https://www.youtube.com/embed/_BcYBFC6zfY?si=HQMenH_SCigLTS49&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin', 'Wreck-It Ralph tells the story of Ralph, the villain from an 8-bit arcade game called Fix-It Felix Jr., who is tired of being the bad guy and yearns to be a hero. Determined to change his image, Ralph ventures into other game worlds to prove his worth, eventually finding himself in a candy-themed racing game called Sugar Rush. There, he befriends Vanellope von Schweetz, a glitchy racer who dreams of winning the race and finding her place in the game. As Ralph and Vanellope team up, they must thwart a dangerous threat that could destroy the arcade and everything Ralph has worked for ', '../images/wreck it ralph poster.jfif'),
+(28, 'TANGLED', 'Mandy Moore as Rapunzel\r\nZachary Levi as Flynn Rider (Eugene Fitzherbert)\r\nRon Perlman as Captain Hook\r\nBetsy Cedric as Mother Gothel\r\nM.C. Gainey \r\nDelaney Peters \r\nPaul F. Tompkins', 'Nathan Greno', '00:01:00', '2025-02-12', 'https://www.youtube.com/embed/ycoY201RTRo?si=ZFkOsh5is1uUd2TX&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; referrerpolicy=&quot;strict-origin-when-cross-origin', 'Tangled is a modern twist on the classic fairy tale of Rapunzel. The story follows Rapunzel, a young princess with magical, long hair that has the power to heal and reverse aging. She has been locked in a tower by the wicked Mother Gothel, who seeks to use Rapunzel&#039;s hair for eternal youth. When a charming thief named Flynn Rider stumbles upon Rapunzel&#039;s tower, Rapunzel makes a deal with him to help her escape and explore the outside world for the first time. As they embark on an adventure together, Rapunzel discovers her true identity, and Flynn learns about courage and redemption. ', '../images/tangled.jfif');
 
 -- --------------------------------------------------------
 
@@ -171,7 +185,10 @@ INSERT INTO `payment` (`payment_id`, `cardholder_name`, `card_number`, `cvv`, `c
 (6, 'kjhgfdsasdfghjk', 9876543, 123, '0300-01-01', 59),
 (7, 'maria', 1234567890, 123, '2024-10-05', 60),
 (8, 'jhgfdsdfgh', 2147483647, 123, '9999-09-09', 61),
-(9, 'lkjgfdfghjkhfgh', 2147483647, 123, '2025-09-09', 62);
+(9, 'lkjgfdfghjkhfgh', 2147483647, 123, '2025-09-09', 62),
+(10, 'maria naeem', 2147483647, 123, '2024-12-12', 65),
+(11, 'maria naeem', 2147483647, 123, '2024-12-12', 65),
+(12, 'matia naeem', 2147483647, 321, '2025-02-12', 66);
 
 -- --------------------------------------------------------
 
@@ -199,7 +216,8 @@ INSERT INTO `reviews` (`review_id`, `user_id`, `movie_id`, `rating`, `comments`,
 (35, NULL, NULL, 5, 'test', '2024-09-06 17:59:12'),
 (36, NULL, NULL, 4, 'kjhgfd', '2024-09-09 07:43:31'),
 (37, NULL, NULL, 5, 'best movie have ever seen beforre', '2024-09-09 09:12:27'),
-(38, 16, 17, 6, 'kjhgfds', '2024-09-14 13:50:04');
+(38, 16, NULL, 6, 'kjhgfds', '2024-09-14 13:50:04'),
+(39, 16, 18, 4, 'best movie ever', '2024-09-16 09:42:07');
 
 -- --------------------------------------------------------
 
@@ -238,8 +256,8 @@ CREATE TABLE `screen` (
 --
 
 INSERT INTO `screen` (`screen_id`, `screen_name`, `total_seats_available`, `seat_class_id`) VALUES
-(3, 'IMAX Screen', 52, NULL),
-(6, '4DX Screen', 27, NULL);
+(3, 'IMAX Screen', 49, NULL),
+(6, '4DX Screen', 23, NULL);
 
 -- --------------------------------------------------------
 
@@ -259,7 +277,9 @@ CREATE TABLE `seat_class` (
 --
 
 INSERT INTO `seat_class` (`seat_id`, `screen_id`, `class_type`, `price`) VALUES
-(14, NULL, 'gold', '600');
+(14, NULL, 'gold', '600'),
+(15, NULL, 'platium', '400'),
+(16, NULL, 'box', '300');
 
 -- --------------------------------------------------------
 
@@ -285,9 +305,16 @@ INSERT INTO `shows` (`show_id`, `screen_id`, `movie_id`, `show_time_id`, `show_d
 (3, NULL, NULL, 3, '2024-08-30', NULL),
 (6, NULL, NULL, 4, '2024-09-09', NULL),
 (7, NULL, NULL, 3, '2024-09-07', NULL),
-(8, 3, 17, 3, '2024-09-14', NULL),
-(9, 6, 17, 4, '2024-08-30', 9),
-(10, 3, 17, 4, '0001-01-01', 8);
+(8, 3, NULL, 3, '2024-09-14', NULL),
+(9, 6, NULL, 4, '2024-08-30', 9),
+(10, 3, NULL, 4, '0001-01-01', 8),
+(11, 3, 18, 4, '2024-09-17', 8),
+(13, 6, 18, 3, '2024-09-17', 9),
+(14, 6, 19, 4, '2024-09-24', 8),
+(15, 3, 20, 5, '2024-09-20', 8),
+(16, 6, 21, 4, '2024-09-21', 9),
+(17, 3, 22, 3, '2024-09-27', 8),
+(18, 6, 23, 4, '2024-09-28', 8);
 
 -- --------------------------------------------------------
 
@@ -462,7 +489,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `b_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `b_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `gender`
@@ -474,19 +501,19 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT for table `movies`
 --
 ALTER TABLE `movies`
-  MODIFY `movie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `movie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -504,13 +531,13 @@ ALTER TABLE `screen`
 -- AUTO_INCREMENT for table `seat_class`
 --
 ALTER TABLE `seat_class`
-  MODIFY `seat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `seat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `shows`
 --
 ALTER TABLE `shows`
-  MODIFY `show_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `show_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `show_timing`

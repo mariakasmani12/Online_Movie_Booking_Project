@@ -52,8 +52,8 @@ $upcoming_movies = mysqli_fetch_all($upcoming_movies_result, MYSQLI_ASSOC);
                                     <div class="item__content">
                                         <h3 class="item__title"><a href="details.php?id=<?php echo $movie['movie_id']; ?>"><?php echo $movie['title']; ?></a></h3>
                                         <span class="item__category">
-                                            <a href="details.php?id=<?php echo $movie['movie_id']; ?>">Action</a>
-                                            <a href="#">Thriller</a>
+                                            <a href="details.php?id=<?php echo $movie['movie_id']; ?>"> Director</a>
+                                            <a href="#"><?php echo $movie['director']; ?></a>
                                         </span>
                                     </div>
                                 </div>
